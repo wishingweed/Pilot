@@ -17,26 +17,17 @@ export default class DataBlock extends React.Component {
     }
 
     render() { 
+    var DataItems;
+var topfive1 = [
+{ARTICLE_ID:1,ARTICLE_NAM:"个人信息"}]
 
-      const { articles } =this.props;
-     
-      var  DataItems;
-      if(articles.fetched === true)
-      {
-       
-        const  { results } = articles.articles;
-        const topfive = results.concat();
-
-
-        const topfive1 = topfive.splice(0,5);
-        DataItems = topfive1.map((item)=><DataItem title = {item.ARTICLE_NAM} key = {item.ARTICLE_ID} uniquekey={item.ARTICLE_ID} />);
-      
-       }
-       else
-       {
-          DataItems = <h1> No Data Found</h1>
-
-       }
+if(topfive1.length>0)
+        {
+          DataItems = topfive1.map((item)=><DataItem title = {item.ARTICLE_NAM} key = {item.ARTICLE_ID} uniquekey={item.ARTICLE_ID} />);
+     }
+     else
+          {DataItems = <h1> No Data Found</h1>
+          }
 
         return (
           <div className="data-block" data-type="TITLE"> 

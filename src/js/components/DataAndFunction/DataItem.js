@@ -6,12 +6,7 @@ import { connect} from "react-redux";
 import { AddCard }  from "../../Actions/KnowledgeAction";
 import { setNodeDragable } from "../../interactScript";
 
-@connect((store)=>{    
-    return {
-        articles:store.articles
-    };
-    
-})
+
 export default class DataItem extends React.Component {
     
   AddOneCard(){
