@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { 
           NewArticleStepOne,SetSaving,
           PostArticle,CloseCreatePanel,
-          fetchArticles 
+          fetchArticles,ForwardStep
         } from "../../Actions/KnowledgeAction";
 
 //Forms
@@ -48,7 +48,7 @@ export default class StrategyDefine extends React.Component {
         })
 
     }
-
+    
     handleClick(){
         var validInput = true;
         var saving_est = this.refs.sav_est.refs.input.value;
@@ -148,7 +148,7 @@ export default class StrategyDefine extends React.Component {
 
     	return (
         <div>
-          <h1>Saving Potential</h1>
+          <h3>Saving Potential</h3>
               <hr />
               <br />
               <Form horizontal>
@@ -193,7 +193,7 @@ export default class StrategyDefine extends React.Component {
 
 
 
-        	<h1> Strategy </h1>
+        	<h3> Strategy </h3>
           <hr />
         	<div className="margin-top10">
             <div className="aligncenter margin-bottom10">
@@ -221,8 +221,8 @@ export default class StrategyDefine extends React.Component {
 
             <ButtonGroup>
              <BackButton/>
-            <Button type="primary" onClick={this.handleClick.bind(this)}>Save <Icon type="right" />
-            </Button>
+            <Button type="primary" onClick={this.handleClick.bind(this)}>Save</Button>
+            
             </ButtonGroup>
 
             </FormItem>

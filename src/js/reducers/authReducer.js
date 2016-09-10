@@ -11,7 +11,6 @@ export default function auth (
   switch (action.type) {
     case "AUTH_SET_TOKEN":{
       
-      console.log(action.payload)
       return {...state,token:action.payload}
     }
     

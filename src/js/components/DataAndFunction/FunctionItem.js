@@ -18,10 +18,27 @@ export default class FunctionItem extends React.Component {
   }
     render() {
 
-           
-        return (
+       switch(this.props.id){
+        case "1":
+        case "4":
+          return (
+            <Button className="func-item ant-btn ant-btn-ghost ant-btn-lg function-button draggable" data-type="FUNC" type="ghost" data-id={this.props.id}>
+              {this.props.text}
+            </Button>
+          );
+          break;
 
-            <Button className="func-item ant-btn ant-btn-dashed ant-btn-lg function-button draggable " data-type="FUNC" type="ghost" data-id={this.props.id}>{this.props.text}</Button>
-      );
+        case "2":
+        case "3":
+          return (
+            <Button className="func-item1 ant-btn ant-btn-ghost ant-btn-lg function-button draggable" data-type="FUNC" type="ghost" data-id={this.props.id}>
+              {this.props.text}
+            </Button>
+          );
+          break;
+
+        default:;
+       }    
+        
   }
 }

@@ -6,8 +6,7 @@ import ArticleMenuTile from "./ArticleMenuTile";
 import { AddCard }  from "../../Actions/KnowledgeAction";
 
 import { CloseMainPanel } from "../../Actions/KnowledgeAction";
-import { setCardDragable } from "../../interactScript";
-import { setAreaDropable } from "../../interactScript";
+import { setCardDragable,handleFocus,setAreaDropable } from "../../interactScript";
 import { connect } from "react-redux";
 
 
@@ -38,7 +37,8 @@ export default class MainPanel extends React.Component {
 
     componentDidMount(){
       
-      setCardDragable(ReactDOM.findDOMNode(this));     
+      setCardDragable(ReactDOM.findDOMNode(this));  
+      handleFocus(ReactDOM.findDOMNode(this));   
                 
     }
 
@@ -58,10 +58,10 @@ export default class MainPanel extends React.Component {
    addnewCard(e)
    {
 
- this.props.dispatch(AddCard(e.target.rel));
+      this.props.dispatch(AddCard(e.target.rel));
    }
 
-filterSearch(e){
+  filterSearch(e){
   
    const { results } = this.props;
    const searcharray = results.concat();
@@ -89,22 +89,21 @@ filterSearch(e){
             total_size:result.TOTAL_SIZE
           }
       });
-    this.setState({
+      this.setState({
         "tabledata": tabledata
-      }
-      );
+      });
 
-}
+  }
 
     render() {
       var results;
       var data;
-console.log(this.state.tabledata)
-if(!this.state.tabledata)
-{
-    const { articles} = this.props;
-     results = articles.articles.results;
-     data = results.map((result)=>{
+
+      if(!this.state.tabledata)
+      {
+        const { articles} = this.props;
+        results = articles.articles.results;
+        data = results.map((result)=>{
           return {
             key:result.ARTICLE_ID,
             article_nam:result.ARTICLE_NAM,
@@ -113,10 +112,10 @@ if(!this.state.tabledata)
             total_size:result.TOTAL_SIZE
           }
       });
-}
-else{
-     data= this.state.tabledata
-}
+    }
+    else{
+      data= this.state.tabledata
+    }
    
 
         

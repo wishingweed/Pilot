@@ -71,7 +71,7 @@ export default class BasicInfo extends React.Component {
             })
 
         }
-    GoToStepFour()
+    GoToStepFive()
     {
         var { tables } = this.state;
         var { size } = this.state;
@@ -179,21 +179,6 @@ var ranknumber;
 
 
      var that = this;
-
-       var newRecord = (
-         <Form horizontal>
-              <Row>
-                  <FormItem   
-                    labelCol={{ span: 6 }}
-                    wrapperCol={{ span: 16 }}
-                    label="Table name:"
-                  >
-                    <Input  ref="tablename" size="default" placeholder="table name"/>
-                 
-                  </FormItem>
-                </Row>
-              </Form>
-        );
       
       const formItemLayout = {
           labelCol: { span: 14},
@@ -263,10 +248,25 @@ var ranknumber;
               }
 
               </Col>        
-                  
-             </Row>
-            
-            <Button id="add-btn" type="primary" onClick={that.SaveName.bind(that)}>Add One Row</Button>
+              
+              </Row>
+              
+              <Row gutter={16}>
+                <Col sm={16}>
+                  <FormItem   
+                    labelCol={{ span: 8 }}
+                    wrapperCol={{ span: 16 }}
+                    label="Table name:"
+                  >
+                    <Input  ref="tablename" size="default" placeholder="table name"/>
+                 
+                  </FormItem> 
+                </Col>
+
+                <Col sm={8}>
+                  <Button type="primary" onClick={this.SaveName.bind(this)}>Add One Row</Button>
+                </Col>
+            </Row>
              
             </Form>
             
@@ -275,11 +275,11 @@ var ranknumber;
 
             <ButtonGroup>
               <BackButton/>
-              <Button type="primary" onClick={this.GoToStepFour.bind(this)}>
+              <Button type="primary" onClick={this.GoToStepFive.bind(this)}>
                 Go forward <Icon type="right" />
               </Button>
             </ButtonGroup>
-            { newRecord }
+           
 
 
 

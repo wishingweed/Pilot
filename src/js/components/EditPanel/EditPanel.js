@@ -7,7 +7,7 @@ import {
         } from "antd";
 import { connect } from "react-redux";
 import { CloseEditPanel,UpdateArticle,fetchArticles } from "../../Actions/KnowledgeAction";
-import { setCardDragable } from "../../interactScript";
+import { setCardDragable,handleFocus } from "../../interactScript";
 
 import ArchivingForm from "../CreatePanel/ArchivingForm";
 import AvoidanceForm from "../CreatePanel/AvoidanceForm";
@@ -94,7 +94,8 @@ export default class EditPanel extends React.Component{
   }
 	componentDidMount() {
 
-    	setCardDragable(ReactDOM.findDOMNode(this));        
+    	setCardDragable(ReactDOM.findDOMNode(this));     
+      handleFocus(ReactDOM.findDOMNode(this));   
 	}
   handleChange(e){
 
@@ -184,7 +185,7 @@ export default class EditPanel extends React.Component{
     
   }
   handleClick(){
-    console.log(this.state.updateFields);
+   
     const { DVM } =  this.state;
     var { updateFields } = this.state;
     var validInput = true;
@@ -393,7 +394,7 @@ export default class EditPanel extends React.Component{
     }); 
 
 		return (
-			<div>
+			<div className="edit-panel">
 				<Card title={"Edit Article"} extra={<Icon type="cross"  onClick={this.closeEdit.bind(this)}/>}>
       			<p>Basic Information</p>
       			<hr />

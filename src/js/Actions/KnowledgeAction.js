@@ -136,7 +136,7 @@ export function GetBestPractice(data){
   var archobj = data.archobj;
   var articleid = data.articleid;
 return dispatch=>{        
-               axios.get("http://10.97.144.117:8000/SmartOperations/services/KnowledgeManagement.xsjs?cmd=RECOMMENDATAION&archobj=" + archobj + "&industry=AUTO" ,{
+              axios.get("http://10.97.144.117:8000/SmartOperations/services/KnowledgeManagement.xsjs?cmd=RECOMMENDATAION&archobj=" + archobj + "&industry=AUTO" ,{
               headers:{
 
                   'X-My-Custom-Header': 'Header-Value',
@@ -212,7 +212,51 @@ export function GetSAPBestPractice(data)
 
 
 }
+//get best practice & industry practice
+export function GetPractices(obj){
+  var config = {
+      headers:{
+          'X-My-Custom-Header': 'Header-Value',
+          'Content-Type': 'application/json'
+      },
+      auth: {
+          username:'zengheng',
+          password: 'Sap12345'
+      }
+  };
+return dispatch=>{        
+    axios.get("http://10.97.144.117:8000/SmartOperations/services/KnowledgeManagement.xsjs?cmd=RECOMMENDATAION&archobj=" + obj + "&industry=AUTO",
+      config).then(function(response,err){
+              
+          var data = response.data.results[0];              
+          var archobj = data.ARCHOBJ;
+          axios.get("http://10.97.144.117:8000/SmartOperations/services/KnowledgeManagement.xsodata/DVMBPRACTICE?$filter= ARCHOBJ eq '"+archobj+"'",
+              config).then(function(response,err){
+                  var detail = response.data.d.results[0];
+                  var payload = {
+                    AVGS:data.AVGS,
+                    Retention:data.Retention,
+                    BEST_PRACTICE:detail.BEST_PRACTICE,
+                    ARCHIVING:detail.ARCHIVING,
+                    AVOIDANCE:detail.AVOIDANCE,
+                    SUMMARIZATION:detail.SUMMARIZATION,
+                    DELETION:detail.DELETION
+                  }
 
+                  dispatch({type:"GET_PRACTICES",payload:payload});
+            }).catch(function(err){console.log(err)})
+
+
+
+      }).catch(function(err){
+         console.log(err);
+      })
+
+      
+
+  
+    }
+}
 export function GetTop5Tables(attr_nam){
 
  

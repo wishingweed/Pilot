@@ -6,7 +6,7 @@ import { ShowMainPanel,ShowEditPanel,ShowCreatePanel } from "../../Actions/Knowl
 
 import { connect } from "react-redux";
 
-
+import {browserHistory} from "react-router"
 
 @connect((store)=>{    
     return {
@@ -24,7 +24,6 @@ export default class FunctionPanel extends React.Component {
   }
   ShowMain(){
 
-      this.props.dispatch(ShowMainPanel());
 
   }
 
@@ -36,7 +35,7 @@ export default class FunctionPanel extends React.Component {
          <FunctionItem text="Create" id="1"/>
          <FunctionItem text="Edit" id="2"/>
          <FunctionItem text="Delete" id="3"/>
-         <FunctionItem text="Show Main" id="4"/>
+         <FunctionItem text="Trend" id="4"/>
         </div>
       );
   }

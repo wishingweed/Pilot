@@ -1,4 +1,5 @@
  import interact from "interact.js";
+ import $ from "jquery";
  
   let dragMoveListener = function(event) {
     let target = event.target,
@@ -76,7 +77,12 @@
     });
     return interactable;
   };
-
-
+  export function handleFocus(ele) {
+    $(ele).click(function() {
+      $(ele).css("zIndex",2);
+      $(ele).siblings().css("zIndex", 0);
+    });
+  };
+ 
 
 

@@ -47,7 +47,11 @@ export default function reducer(state={
         {
             const  { displayPanel } = state;
 
-            displayPanel.push({article:action.payload , visible:true});
+            displayPanel.push({
+                article:action.payload.data_id,
+                x:action.payload.x,
+                y:action.payload.y,
+                visible:true});
             return{...state,displayPanel:displayPanel}
         }
         case "REMOVE_ARTICLE_VIEW":
@@ -92,9 +96,7 @@ export default function reducer(state={
          {
                 const { newArticle } = state;
                 newArticle.currentstep = newArticle.currentstep - 1 ; 
-         return {...state,newArticle:newArticle}
-
-
+                return {...state,newArticle:newArticle}
 
          }
          case "GET_BEST_PRACTICE":
@@ -102,7 +104,6 @@ export default function reducer(state={
             const { articles  } = state;
             
             const { results } = articles;
-            console.log("results:",results); 
             var newdata = results.filter((article)=>{ 
                 if(article.ARTICLE_ID == action.payload.articleid){
                     if(article.bestpractice){
@@ -122,6 +123,44 @@ export default function reducer(state={
             var newArticles = {};
             newArticles.results = newdata;
             return {...state,articles:newArticles};
+        }
+        case "GET_BEST_PRACTICE_STEP2":
+        {
+
+            console.log(action.payload)
+            const { articles  } = state;
+            const { results } = articles;
+            var newdata = results.filter((article)=>{ 
+                if(article.ARTICLE_ID == action.payload.articleid){
+                    if(article.bestpractice){
+                        
+                        article.bestpractice.detail = action.payload.result
+                    }
+                    else{
+                        
+                        article.bestpractice={detail:action.payload.result}
+
+                    }
+                }
+                       
+                return  article;
+                      
+            });
+            var newArticles = {};
+            newArticles.results = newdata;
+            return {...state,articles:newArticles};
+        }
+        case "GET_PRACTICES":
+        {
+            var {newArticle} = state;
+            newArticle.AVGS = action.payload.AVGS;
+            newArticle.Retention = action.payload.Retention;
+            newArticle.BEST_PRACTICE = action.payload.BEST_PRACTICE;
+            newArticle.ARCHIVING = action.payload.ARCHIVING;
+            newArticle.AVOIDANCE = action.payload.AVOIDANCE;
+            newArticle.SUMMARIZATION = action.payload.SUMMARIZATION;
+            newArticle.DELETION = action.payload.DELETION;
+            return {...state,newArticle:newArticle}
         }
         case "GET_TOP5_TABLES":
         {
@@ -205,41 +244,14 @@ export default function reducer(state={
 
         case "POST_ARTICLE":
         {
-            const newArticle = [];
-            newArticle.currentstep = 0 ; 
-
-            return {...state,newArticle:newArticle,refresh:true}
-
+            return {...state,refresh:true}
         } 
         case "UPDATE_ARTICLE":{ 
 
-        return {...state,refresh:true}}
-           
-        case "GET_BEST_PRACTICE_STEP2":
-        {
-
-            console.log(action.payload)
-        const { articles  } = state;
-        const { results } = articles;
-        var newdata = results.filter((article)=>{ 
-                if(article.ARTICLE_ID == action.payload.articleid){
-                    if(article.bestpractice)
-                    {article.bestpractice.detail = action.payload.result
-                    }
-                    else
-                    {
-                        article.bestpractice={detail:action.payload.result}
-
-                    }
-                }
-                       
-                return  article;
-                      
-            });
-            var newArticles = {};
-            newArticles.results = newdata;
-            return {...state,articles:newArticles};
+            return {...state,refresh:true}
         }
+           
+        
         case "GET_CREATE_RANK":
         {
             const {newArticle} = state 

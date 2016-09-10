@@ -31,11 +31,11 @@ export default class DataItem extends React.Component {
     render() {
    
         return (
-            <div className="data-item" data-type="ITEM" data-id={this.props.uniquekey}>
-              <Button type="dashed" >
-              {    this.props.title       }    
-              </Button>
-            </div>
+            
+
+            <Button className="data-item" data-type="ITEM" type="dashed" data-id={this.props.uniquekey}>
+              {this.props.title}
+            </Button>
       );
   }
 }

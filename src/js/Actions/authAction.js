@@ -32,8 +32,7 @@ return dispatch=>{
       
     }).then(function(response,err){
       var data = response.data.d.results;
-      console.log(parameter);
-      console.log(data[0])
+
       if(data.length!=0)
       {
 

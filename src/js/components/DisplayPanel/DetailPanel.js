@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import TableCharts from "./TableCharts";
 import DvmPanel from "./DvmPanel";
 import { RemoveCard,GetBestPractice,ShowEditPanel,DeleteArticle,fetchArticles} from "../../Actions/KnowledgeAction";
-import { setCardDragable,setAreaDropable } from "../../interactScript";
+import { setCardDragable,setAreaDropable,handleFocus} from "../../interactScript";
 
 const confirm = Modal.confirm;
 const success= Modal.success;
@@ -25,13 +25,13 @@ export default class DetailPanel extends React.Component {
 
   NavLeft(){
 
-    var data = this.state.articles;
+   
     if(this.state.page > 1){
       
       var pagenumber = this.state.page -1 ;
 
       this.setState({
-        articles:data,
+       
         page:pagenumber
       })
 
@@ -41,13 +41,13 @@ export default class DetailPanel extends React.Component {
 
   NavRight(){
  
-    var data = this.state.articles;
+   
     if(this.state.page < 3){
 
       var pagenumber = this.state.page + 1;
       
       this.setState({
-        articles:data,
+       
         page:pagenumber
     })
     }
@@ -58,17 +58,15 @@ export default class DetailPanel extends React.Component {
   componentDidMount() {
     var that = this;
     setCardDragable(ReactDOM.findDOMNode(this));
-    
+    handleFocus(ReactDOM.findDOMNode(this));
     const props = this.props;
     this.interactable = setAreaDropable({
 
         element: ReactDOM.findDOMNode(this),
-        accept: '.func-item',
+        accept: '.func-item1',
         ondrop: function(event) {
             let draggableElement = event.relatedTarget,             
                 dropzoneElement = event.target;
-
-            console.log("dropzoneElement:",dropzoneElement);
 
             if(draggableElement.getAttribute('data-type') == "FUNC"){
               
@@ -117,24 +115,24 @@ export default class DetailPanel extends React.Component {
    
 
   // get number 
-    const { articlenumber } = this.props;
-    const { articles } = this.props;
-    const { results } = articles.articles;
-    const target = results.filter((result)=>{ return result.ARTICLE_ID == articlenumber })
+    const { display} = this.props;
+    const { article } = this.props;
     const { user } = this.props.auth;
     
     var parms = { 
      customerid:user.CUSTOMER_ID,
-     articleid : target[0].ARTICLE_ID,
-     archobj:target[0].ARCHOBJ
+     articleid : article.ARTICLE_ID,
+     archobj:article.ARCHOBJ
     }
-
-    this.props.dispatch(GetBestPractice(parms))
+   
+    this.props.dispatch(GetBestPractice(parms));
   
 
     this.setState({
-      articles:target[0],
-      page:1
+      article:article,
+      page:1,
+      x:display.x,
+      y:display.y
     })
 
 
@@ -142,24 +140,31 @@ export default class DetailPanel extends React.Component {
 
     removeCard(){
 
-      this.props.dispatch(RemoveCard(this.props.articlenumber));      
+      this.props.dispatch(RemoveCard(this.state.article.ARTICLE_ID));      
      
     }
 
     render() {  
-
-      console.log("detail panel's property:",this.props);
+      var pos = {
+        top: this.state.y+'px',
+        left:this.state.x+'px'
+      };
+      var pos1 = {
+        top:this.props.display.y+'px',
+        left:this.props.display.x+'px'
+      };
+     
       return (
 
-        <div className="detail-panel" data-id={this.props.articlenumber}>
+        <div className="detail-panel" data-id={this.state.article.ARTICLE_ID} style={pos}>
 
-        <Card title={this.state.articles.ARTICLE_NAM} extra={<Icon type="cross" onClick={this.removeCard.bind(this)} />}>
+        <Card  title={this.state.article.ARTICLE_NAM} extra={<Icon type="cross" onClick={this.removeCard.bind(this)} />}>
           <div className="leftside" onClick={this.NavLeft.bind(this)}>
           <Icon type="left" />
           </div>
           <div className="middlecontainer">  
 
-          <DvmPanel Page={this.state.page} Article={this.state.articles}> </DvmPanel>
+          <DvmPanel Page={this.state.page} Article={this.state.article}> </DvmPanel>
           </div>
           <div className="rightside" onClick={this.NavRight.bind(this)}>
           <Icon type="right"/>

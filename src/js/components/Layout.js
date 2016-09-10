@@ -69,7 +69,7 @@ this.props.dispatch(fetchArticles(user))
       render() {
         
     return (
-         <div>
+         <div id="wrapper">
 
           <DataPanel articles={this.props.articles}> </DataPanel>
           <DisplayPanel articles = {this.props.articles}> </DisplayPanel>
