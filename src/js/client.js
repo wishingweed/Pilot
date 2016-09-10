@@ -16,8 +16,6 @@ import requireAuth from "./requireAuth";
 import  ReactHighCharts  from "react-highcharts";
 
 
-import First from "./components/TrendAna/First";
-
 window.react=React;
 window.Highcharts =  ReactHighCharts;
 const app = document.getElementById('app');
@@ -27,10 +25,8 @@ ReactDOM.render(
     <Route path="/maintain" component ={Maintain}> </Route> 
     
      <Route path="/login" component ={Login}> </Route>  
-     <Route path="/" component ={requireAuth(First)}> 
-        <Route path="/trend" component={First}>   </Route>  
+     <Route path="/" component ={requireAuth(Layout)}>  
       </Route>
-    <Route path="/km" component={requireAuth(Layout)}>   </Route> 
   </Router>
     </Provider>,
 app);
