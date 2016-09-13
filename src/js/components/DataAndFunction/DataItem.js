@@ -9,11 +9,6 @@ import { setNodeDragable } from "../../interactScript";
 
 export default class DataItem extends React.Component {
     
-  AddOneCard(){
-
-      this.props.dispatch(AddCard( this.props.uniquekey ));
-
-  }
 
   componentDidMount() {
     this.interactable = setNodeDragable(ReactDOM.findDOMNode(this));
@@ -26,8 +21,6 @@ export default class DataItem extends React.Component {
     render() {
    
         return (
-            
-
             <Button className="data-item" data-type="ITEM" type="dashed" data-id={this.props.uniquekey}>
               {this.props.title}
             </Button>

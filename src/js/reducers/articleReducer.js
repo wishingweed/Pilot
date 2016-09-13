@@ -1,7 +1,9 @@
 export default function reducer(state={
+    personalInfo:[],
     articles:[],
     fetching:false,
     fetched:false,
+    showPersonnal:false,
     showMain:false,
     showCreate:false,
     refresh:false,
@@ -14,7 +16,19 @@ export default function reducer(state={
     
     switch(action.type)
     {
-        
+        case "GET_PERSONNAL_INFO":
+        {
+            return {...state,personalInfo:action.payload}
+        }
+        case "OPEN_PERSONNAL_PANEL":{
+
+            return {...state,showPersonnal:true}
+        }
+
+        case "CLOSE_PERSONNAL_PANEL":{
+
+            return {...state,showPersonnal:false}
+        }
 
         case "FETCH_ARTICLE_FULFILLED":
         {
@@ -48,7 +62,7 @@ export default function reducer(state={
             const  { displayPanel } = state;
 
             displayPanel.push({
-                article:action.payload.data_id,
+                add_articlea:action.payload.data_id,
                 x:action.payload.x,
                 y:action.payload.y,
                 visible:true});

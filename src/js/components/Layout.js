@@ -23,7 +23,7 @@ import DisplayPanel from "./DisplayPanel/DisplayPanel"
 
 @connect((store)=>{    
     return {
-        articles:store.articles,
+        articles:store.pilot,
         auth:store.auth
     };
     

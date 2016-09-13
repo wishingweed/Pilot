@@ -1,9 +1,47 @@
 import axios from "axios";
 import { Modal } from 'antd';
 
+
+export function ShowPersonnal()
+{
+  return dispatch=>{
+    dispatch({type:"OPEN_PERSONNAL_PANEL"})
+   }
+}
+
+export function ShowPersonalInfo()
+{
+  return dispatch =>{
+
+  var results;
+  axios.get("http://localhost:8083/api/nerds")
+  .then(function (response) {
+    console.log("response is !!!!!!!!",response);
+    results = response;
+     if(results.status == 200)
+  {
+    dispatch({type:"GET_PERSONNAL_INFO",payload:results.data})
+    
+  }
+  else
+  {
+    console.log("Did not retrieve data");
+  }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+}
+
+
+export function ShowMainPanel()
+{
+  return dispatch=>{
+    dispatch({type:"SHOW_ARTICLE_MAIN"}) 
+  }
+}
 export function fetchArticles(user){
-
-
 
 var customerid;
 if(user.ROLE=="ADM")
@@ -29,20 +67,14 @@ else{
     })
     .then(function (response,err) {
         var data = response.data;
-        dispatch({type:"FETCH_ARTICLE_FULFILLED",payload:data})    
+        dispatch ({type:"FETCH_ARTICLE_FULFILLED",payload:data})    
   })
   
     }
     
     
 }
-export function ShowMainPanel()
-{
-  return dispatch=>{
 
-    dispatch({type:"SHOW_ARTICLE_MAIN"}) 
-  }
-}
 export function ShowEditPanel(data){
     return dispatch=>{
       dispatch({type:"SHOW_EDIT_PANEL",payload:data})

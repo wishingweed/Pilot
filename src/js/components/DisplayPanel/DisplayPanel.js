@@ -9,7 +9,7 @@ import EditPanel from "../EditPanel/EditPanel";
 
 import { setAreaDropable } from "../../interactScript";
 
-import { AddCard }  from "../../Actions/KnowledgeAction";
+import { AddCard,ShowPersonnal,ShowPersonalInfo}  from "../../Actions/KnowledgeAction";
 
 import { ShowMainPanel,ShowEditPanel,ShowCreatePanel } from "../../Actions/KnowledgeAction";
 import { connect } from "react-redux";
@@ -18,7 +18,7 @@ import { browserHistory } from "react-router"
 
 @connect((store)=>{    
     return {
-        articles:store.articles
+        pilot:store.pilot
     };
     
 })
@@ -31,7 +31,7 @@ export default class DisplayPanel extends React.Component {
 
    }
 
-   componentDidMount() {
+  componentDidMount() {
 
       const props = this.props;
       const that = this;
@@ -44,17 +44,15 @@ export default class DisplayPanel extends React.Component {
               var x = event.dragEvent.clientX + window.scrollX;
               var y = event.dragEvent.clientY + window.scrollY;
               var data_id = draggableElement.getAttribute('data-id');
-              
               switch(draggableElement.getAttribute('data-type')){
               case "ITEM":
               { 
 
-                  var data ={
-                    x:x,
-                    y:y,
-                    data_id:data_id
-                  };
-                  props.dispatch(AddCard(data));
+                  if(data_id==1)
+                  {
+                    props.dispatch(ShowPersonnal());
+                    props.dispatch(ShowPersonalInfo()); 
+                  }
                   break;
               }
               case "TITLE":
@@ -89,98 +87,32 @@ export default class DisplayPanel extends React.Component {
   }
 
   componentDidUpdate() {
-    const {articles} = this.props;
-    console.log("good")
-    console.log(articles);
 
-    const {displayPanel} = articles;
-    if(articles.showCreate==false && articles.showEdit == false && articles.showMain== false && displayPanel.length==0)
-    {
-
-      ReactDOM.findDOMNode(this).classList.add('helpbgkm');
-
-    }else{
-
-      ReactDOM.findDOMNode(this).classList.remove('helpbgkm');
-    }
   }
 
 
-    render() {
-
-
-      // show or close Main Panel
-    	const { articles }  = this.props;
-    	var DisplayMain;
-      var test;
-    	test = articles;
-    	if(test.showMain === true){ 
-
-      	var array = test.articles;
-      	const { results } = array;
-    		DisplayMain = <MainPanel results={ results } ></MainPanel>
-      }
-    	else
-    	{
-    		DisplayMain = <div></div>
-      }
-
-      var createpanel;
-      if(test.showCreate == true){
-
-          createpanel = <CreatePanel/>
-      }
-      else{
-         createpanel = <div></div>
-      }
-      //whether open edit panel
-      const { showEdit } = articles;
-      var editPanels;
-      if( showEdit == true){
-        const { updateArticle } = articles;
-        const { results } = articles.articles;
-        editPanels = results.map((result)=>{
-          if(updateArticle.article_id == result.ARTICLE_ID){
-            return <EditPanel article={result} />
-          }
-        });
-      }
-      else{
-        editPanels = <div></div>;
-      }
-      
-
-
-     
-      // show or close Detail Panels 
-      const { displayPanel } = articles ;
-      const { results } = articles.articles;
-      var detaildisplay = [];
-      for(var i = 0; i < displayPanel.length;i++){
-        if(displayPanel[i].visible == true){
-          for(var j = 0; j < results.length;j++){
-            if(displayPanel[i].article == results[j].ARTICLE_ID){
-              detaildisplay.push(<DetailPanel article={results[j]} display={displayPanel[i]} />)
-            }
-          }
+  render() {
+    var detaildisplay
+      console.log(this.props);
+      const {pilot}=this.props;
+      const {personalInfo} =pilot;
+      console.log(personalInfo)
+      var personalInfoinfo =  personalInfo.map((one)=>{return<h1>{one.name}  </h1>});
+      if(pilot.showPersonnal == true)
+      {
+        detaildisplay = <Card >
+        {
+           personalInfoinfo
         }
+        </Card>
       }
-      
-      if(detaildisplay.length == 0){
-        detaildisplay.push(<div></div>);
-      }
- 
-
     
 
 
    return (
      <div className="display-panel helpbgkm">
      
-		{ DisplayMain }
     { detaildisplay }
-    { createpanel  }
-    { editPanels }
     
     </div>
       );

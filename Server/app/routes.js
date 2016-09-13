@@ -11,7 +11,14 @@ var Kevin = new Nerd({name:'Kevin'});
         // authentication routes
 
         // sample api route
+        // app.all('*', function(req, res, next) {
+        //     res.header("Access-Control-Allow-Origin", "*");
+        //     // res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+        //     // res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+        //     // res.header("X-Powered-By",' 3.2.1')
+        // });
         app.get('/api/nerds', function(req, res) {
+            res.header("Access-Control-Allow-Origin", "*");
             Kevin.save(function(err,silence)
             {
               if (err)

@@ -118,7 +118,10 @@ export default class DetailPanel extends React.Component {
     const { display} = this.props;
     const { article } = this.props;
     const { user } = this.props.auth;
-    
+    console.log("this.props  is  !!!!!"+ this.props);
+
+
+
     var parms = { 
      customerid:user.CUSTOMER_ID,
      articleid : article.ARTICLE_ID,
