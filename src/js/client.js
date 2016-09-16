@@ -16,8 +16,6 @@ import requireAuth from "./requireAuth";
 import  ReactHighCharts  from "react-highcharts";
 
 
-window.react=React;
-window.Highcharts =  ReactHighCharts;
 const app = document.getElementById('app');
 ReactDOM.render(
     <Provider store = {store}>

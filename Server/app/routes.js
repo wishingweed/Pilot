@@ -15,7 +15,6 @@ var Document = require('./models/documents')
         });
 
          app.post('/api/documents', function(req, res) {
-        console.log(req.body);
         var newOne = new Document(req.body);
         newOne.save(function(err){
                 if(err)
@@ -29,7 +28,10 @@ var Document = require('./models/documents')
         });
 
      app.get('/api/pilots', function(req, res) {
-            Pilot.find(function(err, pilots) {
+
+        console.log(req.query);
+
+            Pilot.find(req.query,function(err, pilots) {
                 // if there is an error retrieving, send the error. 
                                 // nothing after res.send(err) will execute
                 if (err)
