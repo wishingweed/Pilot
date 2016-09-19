@@ -1,11 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { History,Router } from "react-router";
-
 import { Form, Input, Button, Checkbox,Col,Tabs,Select } from 'antd';
 import md5 from "md5-js"
-
-import { setAuthToken,CusRegister,UserRegister,regCheck} from "../../Actions/authAction"
+import { setAuthToken,CusRegister,UserRegister,regCheck,personalInfoRegister } from "../../Actions/authAction"
 
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
@@ -73,157 +71,54 @@ export default class Login extends React.Component {
             password: md5(e.target.value)
         })
     }
-    IndustryChange(value){
+    currentLevel(value){
       console.log(value); 
       this.setState({
-        industry:valid
+        currentLevel:value
       });
     }
     saveCusInfo(){
       //customer information
-        var cus_id = this.refs.cus_id.refs.input.value;
-        var cus_name = this.refs.cus_name.refs.input.value;
-        var sid = this.refs.sid.refs.input.value;
-        var client = this.refs.client.refs.input.value;
-        var industry = this.state.industry;
-        var country = this.refs.country.refs.input.value;
-        var city = this.refs.city.refs.input.value;
-      var valid = true;
-      var token;
-      
-      
-          //but customer id is empty
-          if(cus_id == ""){
-            valid = false;
-            token={
-              authorized:false,
-              error:"cus_id",
-              user:null,
-              hint:"input the customer id"
-            }
-            this.props.dispatch(regCheck(token));
-          }
+        var userId = this.refs.userId.refs.input.value;
+        var name = this.refs.name.refs.input.value;
+        var pass = this.refs.pass.refs.input.value;
+        var role = this.refs.role.refs.input.value;
+        var currentLevel = this.state.currentLevel;
+        // var targetLevel = this.state.targetLevel;
+        var valid = true;
+        var token;
         
         //customer id is filled
         if(valid){
-          var regCusInfo = {};
-          regCusInfo.customer_id = cus_id;
-          regCusInfo.customer_name = cus_name;
-          regCusInfo.sid = sid;
-          regCusInfo.client = client;
-          regCusInfo.industry = industry;
-          regCusInfo.country = country;
-          regCusInfo.city = city;
-          this.props.dispatch(CusRegister(regCusInfo));   
-
+          var userInfo = {};
+          userInfo.userId = userId;
+          userInfo.name = name;
+          userInfo.pass = pass;
+          userInfo.role = role;
+          userInfo.currentLevel = currentLevel;
+          this.props.dispatch(personalInfoRegister(userInfo));   
+        console.log(userInfo);
         }
 
     }
-    saveUsrInfo(){
-      var username = this.refs.username.refs.input.value;
-      var usr_cus_id = this.refs.usr_cus_id.refs.input.value;
-      var pwd1 = this.refs.pwd1.refs.input.value;
-      var pwd2 = this.refs.pwd2.refs.input.value;
+    
 
-      var token;
-      var valid = true;
-       
-          if(username == ""){
-            valid = false;
-            token={
-              authorized:false,
-              error:"username",
-              user:null,
-              hint:"input the user name"
-            }
-          } 
-          if(valid){
-            if(usr_cus_id == ""){
-              valid = false;
-              token={
-                authorized:false,
-                error:"usr_cus_id",
-                user:null,
-                hint:"input the customer id"
-              }
-            }
-          }
-          if(valid){
-            if(pwd1 == ""){
-              valid = false;
-              token={
-                authorized:false,
-                error:"pwd1",
-                user:null,
-                hint:"input the password"
-              }
-          
-            }
-          }
-        if(valid){
-          if(pwd2 == ""){
-            valid = false;
-            token={
-              authorized:false,
-              error:"pwd2",
-              user:null,
-              hint:"input the confirmed password"
-            }
-          
-          }
-        }
-        if(valid){
-          if(pwd1 != pwd2){
-            valid = false;
-            token={
-              authorized:false,
-              error:"pwd2",
-              user:null,
-              hint:"input the confirmed password"
-            }
-          }
-        }
-        if(valid){
-          var regUsrInfo = {};
-          regUsrInfo.customer_id = usr_cus_id;
-          regUsrInfo.username = username;
-          regUsrInfo.pwd1 = md5(pwd1);
-          regUsrInfo.pwd2 = md5(pwd2);
-          
-          this.props.dispatch(UserRegister(regUsrInfo)); 
-          if(!this.props.auth.token.error){
-            setTimeout(function(){
-
-            this.setState({
-            tab_key:"1"
-          });
-          }.bind(this),3000)
-          
-          }  
-          
-        }
-        else{
-          this.props.dispatch(regCheck(token));
-        }
-        
-
-
-    }
     
     render() {
 
 
       const {auth} =this.props;
       const {token } = auth;
+
       
       return  (
       
       
           <div className="login">
-            <p id="km-title">Smart Operation</p>
+            <p id="km-title">国航晋升系统</p>
 
             <Tabs defaultActiveKey="1"  activeKey={this.state.tab_key} className="login-tab" onChange={this.callback.bind(this)}>
-              <TabPane  tab="login" key="1">           
+              <TabPane  tab="登录" key="1">           
 
             {token.error=="password"?"error":""}
 
@@ -285,154 +180,61 @@ export default class Login extends React.Component {
             </Form>
               </TabPane >
 
-              <TabPane  tab="register" key="2">
-                <h3>Customer Information</h3>
+              <TabPane  tab="注册" key="2">
+                <h3>个人信息</h3>
                 <hr />
                 <br />
                 <Form horizontal className="reg-form">
-                  
                   <FormItem
-                    label="Customer ID:"
+                    label="工号:"
                     labelCol={{ span: 7 }}
                     wrapperCol={{ span: 12 }}
-                    validateStatus={token.error=="cus_id"?"error":""}
-                    help={token.error=="cus_id"?token.hint:""}
-
-                    
                   >
-                  <Input  ref="cus_id"/>
+                  <Input  ref="userId"/>
                   </FormItem>
-
-                   <FormItem
-                    label="Customer Name:"
+                  <FormItem
+                    label="姓名:"
                     labelCol={{ span: 7 }}
                     wrapperCol={{ span: 12 }}
-                    
                   >
-                  <Input ref="cus_name"/>
+                  <Input  ref="name"/>
                   </FormItem>
-
                   <FormItem
-                    label="System ID:"
+                    label="密码:"
                     labelCol={{ span: 7 }}
                     wrapperCol={{ span: 12 }}
-                    
                   >
-                  <Input  ref="sid"/>
+                  <Input  ref="pass"/>
                   </FormItem>
-
                   <FormItem
-                    label="Client:"
+                    label="职务:"
                     labelCol={{ span: 7 }}
                     wrapperCol={{ span: 12 }}
-                    
                   >
-                  <Input  ref="client"/>
-                  </FormItem>
-
+                  <Input  ref="role"/>
+                  </FormItem>     
                   <FormItem
-                    label="Industry:"
+                    label="当前等级:"
                     labelCol={{ span: 7 }}
                     wrapperCol={{ span: 12 }}
                     
                   >
                   <Select showSearch
-                    placeholder="please select industry"                   
-                    onChange={this.IndustryChange.bind(this)}                    
+                    placeholder="请输入你的当前等级"                   
+                    onChange={this.currentLevel.bind(this)}                    
                     
                   >
-                    <Option value="AUTO">AUTO</Option>
-                    <Option value="RETAIL">RETAIL</Option>
-                    <Option value="POWER">POWER</Option>
-                    <Option value="MANUFACTORY">MANUFACTORY</Option>
-                    <Option value="HIGH-TECH">HIGH-TECH</Option>
-                    <Option value="UTILITY">UTILITY</Option>
-                    <Option value="BANK">BANK</Option>
+                    <Option value="F0">F0</Option>
+                    <Option value="F1">F1</Option>
+                    <Option value="F2">F2</Option>
+                    <Option value="F3">F3</Option>
+                    <Option value="F4">F4</Option>
                   </Select>
-                  </FormItem>
-
-                   <FormItem
-                    label="Country:"
-                    labelCol={{ span: 7 }}
-                    wrapperCol={{ span: 12 }}
-                    
-                  >
-                  <Input ref="country"/>
-                  </FormItem>
-
-
-                   <FormItem
-                    label="City:"
-                    labelCol={{ span: 7 }}
-                    wrapperCol={{ span: 12 }}
-                    
-                  >
-                  
-                  <Input  ref="city"/>                        
-                  </FormItem>
-                  </Form>
-
-                  <Button type="primary" className="reg-btn" onClick={this.saveCusInfo.bind(this)}>Register</Button>
-                   
-                  <h3>User Information</h3>
-                  <hr />
-                  <br />
-                  <Form horizontal className="reg-form">
-                   <FormItem
-                    label="User Name:"
-                    labelCol={{ span: 7 }}
-                    wrapperCol={{ span: 12 }}
-                    validateStatus={token.error=="username"?"error":""}
-                    help={token.error=="username"?token.hint:""}
-                    
-                  >
-                  <Input  ref="username"/>
-                  </FormItem>
-
-                   <FormItem
-                    label="Customer ID:"
-                    labelCol={{ span: 7 }}
-                    wrapperCol={{ span: 12 }}
-                    validateStatus={token.error=="usr_cus_id"?"error":""}
-                    help={token.error=="usr_cus_id"?token.hint:""}
-                   
-                    
-                  >
-                  <Input  ref="usr_cus_id"/>
-                  </FormItem>
-
-                   <FormItem
-                    label="Password:"
-                    labelCol={{ span: 7 }}
-                    wrapperCol={{ span: 12 }}
-                    validateStatus={token.error=="pwd1"?"error":""}
-                    help={token.error=="pwd1"?token.hint:""}
-                    
-                  >
-                  <Input type="password" ref="pwd1"/>
-                  </FormItem>
-
-                  <FormItem
-                    label="Confirm Password:"
-                    labelCol={{ span: 7 }}
-                    wrapperCol={{ span: 12 }}
-                    validateStatus={token.error=="pwd2"?"error":""}
-                    help={token.error=="pwd2"?token.hint:""}
-                    
-                  >
-                  <Input type="password" ref="pwd2"/>
-                  </FormItem>
-
-                  <Button type="primary" className="reg-btn" onClick={this.saveUsrInfo.bind(this)}>Register</Button>
-
-                 
-                 
+                  </FormItem> 
+                  <Button type="primary" className="reg-btn" onClick={this.saveCusInfo.bind(this)}>Register</Button>               
                   </Form>
                   </TabPane>
-              </Tabs>
-
-            
-            
+            </Tabs> 
           </div>        	
       );
     }

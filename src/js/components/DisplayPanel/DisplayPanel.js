@@ -6,6 +6,7 @@ import MainPanel from "./MainPanel";
 import DetailPanel from "./DetailPanel";
 import CreatePanel from "../CreatePanel/CreatePanel";
 import EditPanel from "../EditPanel/EditPanel";
+<<<<<<< HEAD
 //pilot 
 import PersonnalPanel from "./PersonalInfo"
 import {ShowPersonnal,ShowSituation} from "../../Actions/pilotAction"
@@ -14,6 +15,10 @@ import { setAreaDropable } from "../../interactScript";
 import { AddCard}  from "../../Actions/KnowledgeAction";
 
 import { ShowMainPanel,ShowEditPanel,ShowCreatePanel } from "../../Actions/KnowledgeAction";
+=======
+import { setAreaDropable } from "../../interactScript";
+import { ShowMainPanel,ShowEditPanel,ShowCreatePanel,AddCard,ShowPersonnal,ShowPersonalInfo } from "../../Actions/KnowledgeAction";
+>>>>>>> origin/login
 import { connect } from "react-redux";
 import { browserHistory } from "react-router";
 import SituationPanel from "./SituationPanel";
