@@ -6,12 +6,8 @@ import MainPanel from "./MainPanel";
 import DetailPanel from "./DetailPanel";
 import CreatePanel from "../CreatePanel/CreatePanel";
 import EditPanel from "../EditPanel/EditPanel";
-
 import { setAreaDropable } from "../../interactScript";
-
-import { AddCard,ShowPersonnal,ShowPersonalInfo}  from "../../Actions/KnowledgeAction";
-
-import { ShowMainPanel,ShowEditPanel,ShowCreatePanel } from "../../Actions/KnowledgeAction";
+import { ShowMainPanel,ShowEditPanel,ShowCreatePanel,AddCard,ShowPersonnal,ShowPersonalInfo } from "../../Actions/KnowledgeAction";
 import { connect } from "react-redux";
 import { browserHistory } from "react-router"
 

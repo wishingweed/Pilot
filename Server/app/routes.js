@@ -1,8 +1,23 @@
 // app/routes.js
 
 // grab the nerd model we just created
-var Nerd = require('./models/nerd');
+var Nerd = require('./models/pilot');
+var Test = require('./models/pilot');
+var personalInfo = require('./models/pilot');
 var Kevin = new Nerd({name:'Kevin'});
+// var Frank = new personalInfo({
+//     userId:'001',
+//     name:'Frank',
+//     pass:'1234',
+//     role:'Pilot',
+//     level:{
+//         current_level:'F0',
+//         target_level:'F1'
+//         }
+//     });
+
+
+
 
     module.exports = function(app) {
 
@@ -35,6 +50,27 @@ var Kevin = new Nerd({name:'Kevin'});
                 res.json(nerds); // return all nerds in JSON format
             });
 
+            });
+
+            app.post('/api/post', function(req, res) {
+            console.log(req.body);
+            res.header("Access-Control-Allow-Origin","*");
+            var reg = new personalInfo(req.body);
+            reg.save(function(err,silence)
+            {
+              if (err)
+                    res.send(err);
+            });
+            // use mongoose to get all nerds in the database
+            personalInfo.find(function(err,personalInfos) {
+                // if there is an error retrieving, send the error. 
+                                // nothing after res.send(err) will execute
+                if (err)
+                    res.send(err);
+                            console.log(personalInfos);
+                console.log(personalInfos);
+                res.json(personalInfos); // return all nerds in JSON format
+            });
         });
 
         // route to handle creating goes here (app.post)

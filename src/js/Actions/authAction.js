@@ -3,6 +3,8 @@ const AUTH_DELETE_TOKEN = 'AUTH_DELETE_TOKEN'
 import axios from "axios"
 import { Modal } from 'antd';
 
+import { browserHistory,Router } from "react-router";
+
 export function setAuthToken (parameter) {
 
 
@@ -48,66 +50,50 @@ export function regCheck(data){
     dispatch({type:"REG_CHECK",payload:data})
   }
 }
-export function CusRegister(data){
+
+
+
+export function personalInfoRegister(data){
+
+
+  var config = {
+  headers:{"Access-Control-Allow-Origin":"*",}
+  }
   return dispatch=>{
-    var customer_id = data.customer_id;
-    var customer_name = data.customer_name;    
-    var sid = data.sid;
-    var client = data.client;
-    var industry = data.industry;
-    var country = data.country;
-    var city = data.city;
+    var userId = data.userId;
+    var name = data.name;    
+    var pass = data.pass;
+    var role = data.role;
+    var currentLevel = data.currentLevel;
 
-    var config = {
-      headers:{
-        'X-My-Custom-Header': 'Header-Value',
-        'content-type':'application/json'
-        },
-      auth: {
-        username: 'zengheng',
-        password: 'Sap12345'
-      }
-    };
-    axios.post("http://10.97.144.117:8000/SmartOperations/services/authorization.xsodata/CUST",{
 
-        CUSTOMER_ID:customer_id,
-        CUSTOMER_NAME:customer_name,
-        INDUSTRY:industry,
-        COUNTRY:country,
-        CITY:city,
-        SYSTEMID:sid,
-        CLIENT:client
-    },
-    config).then(function(response){
-        var token = {
-              error:"",
-              hint:""
-        };
-        dispatch({type:"REG_CHECK",payload:token});
-        const modal = Modal.success({
-            title: 'Successfully register! ',
-            content: 'You have regitered done',
-        });
+    console.log("currentLevel", currentLevel);
 
-    }).catch(function(response){
-      var message = response.data.error.message.value;
-      if(message == "Service exception: [301] unique constraint violated"){
-        var token = {
-            authorized:false,
-            user:null,
-            error:"cus_id",
-            hint:"customer id already exists"
+    axios.post("http://localhost:8083/api/post",{
+        userId:userId,
+        name:name,
+        pass:pass,
+        role:role,
+        level:{
+        current_level:currentLevel,
+        target_level:'F1'
         }
-        dispatch({type:"REG_CHECK",payload:token});
-      }
-    })
+    },config).then(function(response){
+      if(response.status == 200){
+        const modal = Modal.success({
+              title: '注册成功 ',
+              content: '请登录',
+            });
+      browserHistory.push("/")                  }
+      }).catch(function (error) {
+    console.log("error is",error);
+  });
 
 
   }
 }
 export function UserRegister(data){
   return dispatch=>{
-
     var username = data.username;    
     var customer_id = data.customer_id; 
     var role = "BSC";
@@ -201,14 +187,107 @@ export function UserRegister(data){
         }
       }).catch(function(response){
         console.log(response);
+      })    
+  }
+}
+
+export function UserRegister(data){
+  return dispatch=>{
+
+    var userId = data.userId;    
+    var name = data.name; 
+    var pass = data.pass;
+    var role = data.role;
+    var currentLevel = data.currentLevel;
+    var token={};
+    //request configuration
+    var config = {
+      headers:{
+        'X-My-Custom-Header': 'Header-Value',
+        'content-type':'application/json'
+        },
+      auth: {
+        username: 'zengheng',
+        password: 'Sap12345'
+      }
+    };
+
+    axios.get("http://10.97.144.117:8000/SmartOperations/services/authorization.xsodata/CUST?$filter=CUSTOMER_ID eq "+customer_id,
+      config).then(function(response){
+        if(response.data.d.results.length > 0){
+          //check user name whether exists
+    axios.get("http://10.97.144.117:8000/SmartOperations/services/authorization.xsodata/users?$filter=USERNAME eq '"+username+"'",
+      config
+      ).then(function(response){
+        if(response.data.d.results.length > 0){
+          token = {
+            authorized:false,
+            user:null,
+            error:"username",
+            hint:"username already exists"
+          }
+          dispatch({type:"REG_CHECK",payload:token});
+         
+        }
+        else{
+          axios.get("http://10.97.144.117:8000/SmartOperations/services/authorization.xsodata/users?$orderby=USER_ID desc&top=1",
+          config).then(function(response){
+              
+              var user_id = response.data.d.results[0].USER_ID;
+              user_id = Number(user_id + 1);
+              user_id = user_id.toString();
+
+              axios.post("http://10.97.144.117:8000/SmartOperations/services/authorization.xsodata/users",{
+
+                  USER_ID:user_id,
+                  CUSTOMER_ID:customer_id,
+                  PASSWORD:pwd,
+                  USERNAME:username,
+                  ROLE:role
+              },
+              config).then(function(response){             
+                  token = {
+                      error:"",
+                      hint:""
+                  };
+                  dispatch({type:"REG_CHECK",payload:token});
+                  const modal = Modal.success({
+                        title: 'Successfully register! ',
+                        content: 'You have regitered done',
+                  });
+
+              }).catch(function(response){
+                    console.log(response);
+              })
+                
+              
+    
+          }).catch(function(response){
+            console.log(response);
+          })
+
+
+
+
+        }
+       
+      }).catch(function(response){
+        console.log(response);
       })
 
-    
-
-
-
-
-
-    
-}
+        }
+        //customer id does not exist
+        else{
+          token = {
+            authorized:false,
+            user:null,
+            error:"usr_cus_id",
+            hint:"customer id does not exists"
+          }
+          dispatch({type:"REG_CHECK",payload:token});
+        }
+      }).catch(function(response){
+        console.log(response);
+      })    
+  }
 }
