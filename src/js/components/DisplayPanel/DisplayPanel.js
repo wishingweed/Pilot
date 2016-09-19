@@ -6,19 +6,23 @@ import MainPanel from "./MainPanel";
 import DetailPanel from "./DetailPanel";
 import CreatePanel from "../CreatePanel/CreatePanel";
 import EditPanel from "../EditPanel/EditPanel";
-
+//pilot 
+import PersonnalPanel from "./PersonalInfo"
+import {ShowPersonnal,ShowSituation} from "../../Actions/pilotAction"
 import { setAreaDropable } from "../../interactScript";
 
-import { AddCard,ShowPersonnal,ShowPersonalInfo}  from "../../Actions/KnowledgeAction";
+import { AddCard}  from "../../Actions/KnowledgeAction";
 
 import { ShowMainPanel,ShowEditPanel,ShowCreatePanel } from "../../Actions/KnowledgeAction";
 import { connect } from "react-redux";
-import { browserHistory } from "react-router"
+import { browserHistory } from "react-router";
+import SituationPanel from "./SituationPanel";
 
 
 @connect((store)=>{    
     return {
-        pilot:store.pilot
+        pilot:store.pilot,
+        pilotinfo:store.pilotinfo
     };
     
 })
@@ -44,6 +48,8 @@ export default class DisplayPanel extends React.Component {
               var x = event.dragEvent.clientX + window.scrollX;
               var y = event.dragEvent.clientY + window.scrollY;
               var data_id = draggableElement.getAttribute('data-id');
+              console.log(data_id);
+
               switch(draggableElement.getAttribute('data-type')){
               case "ITEM":
               { 
@@ -51,7 +57,11 @@ export default class DisplayPanel extends React.Component {
                   if(data_id==1)
                   {
                     props.dispatch(ShowPersonnal());
-                    props.dispatch(ShowPersonalInfo()); 
+                  }
+                  if(data_id ==2)
+                  {
+                    props.dispatch(ShowSituation());
+
                   }
                   break;
               }
@@ -66,6 +76,9 @@ export default class DisplayPanel extends React.Component {
                   
                   if(data_id == "1"){
                       props.dispatch(ShowCreatePanel());
+                  }
+                  else if(data_id == "2")
+                  {
                   }
                   else if(data_id == "4"){
                     browserHistory.push("/trend")
@@ -92,19 +105,16 @@ export default class DisplayPanel extends React.Component {
 
 
   render() {
-    var detaildisplay
-      console.log(this.props);
-      const {pilot}=this.props;
-      const {personalInfo} =pilot;
-      console.log(personalInfo)
-      var personalInfoinfo =  personalInfo.map((one)=>{return<h1>{one.name}  </h1>});
-      if(pilot.showPersonnal == true)
+    var detaildisplay,Situationdisplay;
+      const {pilotinfo}=this.props;
+      console.log(pilotinfo)
+      if(pilotinfo.showPersonnal == true)
       {
-        detaildisplay = <Card >
-        {
-           personalInfoinfo
-        }
-        </Card>
+        detaildisplay = <PersonnalPanel></PersonnalPanel>
+      }
+      if(pilotinfo.showDocument == true)
+      {
+          Situationdisplay = <SituationPanel></SituationPanel>
       }
     
 
@@ -113,6 +123,7 @@ export default class DisplayPanel extends React.Component {
      <div className="display-panel helpbgkm">
      
     { detaildisplay }
+    { Situationdisplay }
     
     </div>
       );

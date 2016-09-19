@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Button } from "antd";
+import { Button,Badge  } from "antd";
 import { Link } from "react-router";
 import { connect} from "react-redux"; 
 import { AddCard }  from "../../Actions/KnowledgeAction";
@@ -21,9 +21,10 @@ export default class DataItem extends React.Component {
     render() {
    
         return (
-            <Button className="data-item" data-type="ITEM" type="dashed" data-id={this.props.uniquekey}>
-              {this.props.title}
+           <Button className="data-item" data-type="ITEM" type="dashed" data-id={this.props.uniquekey}>
+             <Badge dot={this.props.uniquekey==3?true:false} > {this.props.title}  </Badge>
             </Button>
+          
       );
   }
 }

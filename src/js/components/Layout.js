@@ -18,10 +18,15 @@ import DataPanel from "./DataAndFunction/DataPanel";
 import FunctionPanel from "./DataAndFunction/FunctionPanel";
 import DisplayPanel from "./DisplayPanel/DisplayPanel"
 
+
+//
+import {GET_PILOT_DATA} from "../Actions/pilotAction";
+
 @connect((store)=>{    
     return {
         articles:store.pilot,
-        auth:store.auth
+        auth:store.auth,
+        Pilot:store.pilotinfo
     };
     
 })
@@ -58,6 +63,7 @@ const {auth} = this.props;
 
 const {user} = auth.token ; 
 this.props.dispatch(fetchArticles(user))*/
+this.props.dispatch(GET_PILOT_DATA())
 
   }
 

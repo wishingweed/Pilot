@@ -10,8 +10,9 @@ export default function Pilot (
 ) {
   switch (action.type) {
     case "FETCH_PILOT_INFO":{
+      return {...state,Pilot:action.payload}
 
-      
+
     }
     case "OPEN_PERSONNAL_PANEL":{
 
@@ -22,12 +23,12 @@ export default function Pilot (
 
             return {...state,showPersonnal:false}
         }
-        case "OPEN_DOCUMENT_PANEL":{
+        case "OPEN_SITUATION_PANEL":{
 
             return {...state,showDocument:true}
         }
 
-        case "CLOSE_DOCMENT_PANEL":{
+        case "CLOSE_SITUATION_PANEL":{
 
             return {...state,showDocument:false}
         }
