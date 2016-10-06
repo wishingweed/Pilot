@@ -22,7 +22,7 @@ export default class FunctionItem extends React.Component {
         case "1":
         case "4":
           return (
-            <Button className="func-item ant-btn ant-btn-ghost ant-btn-lg function-button draggable" data-type="FUNC" type="ghost" data-id={this.props.id}>
+            <Button className="func-item ant-btn ant-btn-ghost ant-btn-lg function-button draggable" data-type="ANALYSIS" type="ghost" data-id={this.props.id}>
               {this.props.text}
             </Button>
           );

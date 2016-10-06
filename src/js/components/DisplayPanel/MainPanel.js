@@ -37,8 +37,37 @@ export default class MainPanel extends React.Component {
 
     componentDidMount(){
       
+      const props = this.props;
+      const that = this;
+      this.interactable = setAreaDropable({
+
+          element: ReactDOM.findDOMNode(this),
+          accept: '.data-item, .data-block,.func-item',
+          ondrop: function(event) {
+              let draggableElement = event.relatedTarget;
+              var x = event.dragEvent.clientX + window.scrollX;
+              var y = event.dragEvent.clientY + window.scrollY;
+              var data_id = draggableElement.getAttribute('data-id');
+              switch(draggableElement.getAttribute('data-type')){
+              case "ANALYSIS":
+              { 
+                alert("analysis")
+
+              }
+
+
+              default:
+                  ;
+              }
+              
+          }
+      });
+
       setCardDragable(ReactDOM.findDOMNode(this));  
       handleFocus(ReactDOM.findDOMNode(this));   
+
+
+
                 
     }
 

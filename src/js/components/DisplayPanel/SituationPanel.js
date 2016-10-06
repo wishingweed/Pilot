@@ -21,6 +21,33 @@ export default class SituationPanel extends React.Component {
 
     componentDidMount(){
       
+      const props = this.props;
+      const that = this;
+ this.interactable = setAreaDropable({
+
+          element: ReactDOM.findDOMNode(this),
+          accept: '.data-item, .data-block,.func-item',
+          ondrop: function(event) {
+              let draggableElement = event.relatedTarget;
+              var x = event.dragEvent.clientX + window.scrollX;
+              var y = event.dragEvent.clientY + window.scrollY;
+              var data_id = draggableElement.getAttribute('data-id');
+
+              switch(draggableElement.getAttribute('data-type')){
+            
+              case "ANALYSIS":
+              {
+               alert("change style")
+                  break;
+              }
+              default:
+                  ;
+              }
+              
+          }
+      });
+
+
       setCardDragable(ReactDOM.findDOMNode(this));  
       handleFocus(ReactDOM.findDOMNode(this));   
                 
@@ -28,9 +55,8 @@ export default class SituationPanel extends React.Component {
 
 
     render() {
-      console.log("situation");
         return (
-				
+				<div className="data-card">
 				<Card style={{width:500}} title="晋升现状" extra={<Icon type="cross" onClick={this.closesituation.bind(this)} />} >
   <Timeline>
     <Timeline.Item color="green">提出申请 2015-09-01</Timeline.Item>
@@ -43,6 +69,7 @@ export default class SituationPanel extends React.Component {
   </Timeline>
 
 				</Card>
+        </div>
       );
   }
 }

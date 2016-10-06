@@ -33,14 +33,7 @@ import {GET_PILOT_DATA} from "../Actions/pilotAction";
 export default class Layout extends React.Component {
 
 
-  shouldComponentUpdate(nextProps,nextState)
-  {   
- /*   const {articles} =nextProps;
-    if(articles.refresh == true || articles.fetched == true )
-    {
-      return true;
-    }*/
-  }
+
 
   componentWillUpdate(nextProps,nextState){
   /*  const {auth} = this.props;
@@ -63,7 +56,7 @@ const {auth} = this.props;
 
 const {user} = auth.token ; 
 this.props.dispatch(fetchArticles(user))*/
-this.props.dispatch(GET_PILOT_DATA())
+//this.props.dispatch(GET_PILOT_DATA())
 
   }
 

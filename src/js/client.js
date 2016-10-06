@@ -7,10 +7,9 @@ import store from "./store";
 import DisplayPanel from "./components/DisplayPanel/DisplayPanel";
 
 import DetailPanel from "./components/DisplayPanel/DetailPanel";
-import Maintain from "./components/MaintainBestpractice/Maintain";
 
 import Login from "./components/Login/login"
-
+import Drag from "./components/Drag"
 import requireAuth from "./requireAuth";
 import  ReactHighCharts  from "react-highcharts";
 
@@ -18,11 +17,11 @@ import  ReactHighCharts  from "react-highcharts";
 const app = document.getElementById('app');
 ReactDOM.render(
     <Provider store = {store}>
-    <Router history={browserHistory}>
-    <Route path="/maintain" component ={Maintain}> </Route> 
-    
+    <Router history={hashHistory}>
      <Route path="/login" component ={Login}> </Route>  
-     <Route path="/" component ={requireAuth(Layout)}>  
+     <Route path="/" component ={Layout}> 
+     <Route path="/draganddrop" component ={Drag}> </Route>  
+      
       </Route>
   </Router>
     </Provider>,
