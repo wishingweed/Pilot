@@ -51,3 +51,12 @@ export function ShowSituation()
     dispatch({type:"OPEN_SITUATION_PANEL"})
    }
 }
+export function ChangeStyle()
+{
+
+
+  var content = document.getElementById('content');
+    content.classList.add('content-' + Math.floor(Math.random() * 3));
+
+
+}
