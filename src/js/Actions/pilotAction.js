@@ -60,3 +60,14 @@ export function ChangeStyle()
 
 
 }
+
+export function ChangeWorkflow()
+{
+
+  return dispatch=>{
+    dispatch({type:"OPEN_WORKFLOW_PANEL"})
+
+  }
+
+
+}

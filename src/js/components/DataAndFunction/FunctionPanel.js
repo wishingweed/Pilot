@@ -32,7 +32,7 @@ export default class FunctionPanel extends React.Component {
 
         return (
        <div className = "function-panel ">
-         <FunctionItem text="Create" id="1"/>
+         <FunctionItem text="Change" id="1"/>
          <FunctionItem text="Edit" id="2"/>
          <FunctionItem text="Delete" id="3"/>
          <FunctionItem text="Trend" id="4"/>

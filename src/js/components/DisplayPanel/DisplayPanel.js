@@ -20,6 +20,8 @@ import { connect } from "react-redux";
 import { browserHistory } from "react-router";
 import SituationPanel from "./SituationPanel";
 
+import ChangeWorkFlow from "./ChangeWorkFlow";
+
 
 @connect((store)=>{    
     return {
@@ -108,6 +110,7 @@ export default class DisplayPanel extends React.Component {
 
   render() {
     var detaildisplay,Situationdisplay;
+    var displayarea;
       const {pilotinfo}=this.props;
       console.log(pilotinfo)
       if(pilotinfo.showPersonnal == true)
@@ -118,7 +121,18 @@ export default class DisplayPanel extends React.Component {
       {
           Situationdisplay = <SituationPanel></SituationPanel>
       }
-    
+      if(pilotinfo.display.length!=0)
+      {
+     displayarea =  pilotinfo.display.map((one)=>{
+        if(one.type=="Workflow")
+          {
+            return <ChangeWorkFlow key="23124"></ChangeWorkFlow>;
+          }
+
+
+        });
+
+      } 
 
 
    return (
@@ -126,7 +140,7 @@ export default class DisplayPanel extends React.Component {
      
     { detaildisplay }
     { Situationdisplay }
-    
+    { displayarea }
     </div>
       );
   }

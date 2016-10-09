@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 
 import { connect } from "react-redux"
 import { setCardDragable,setAreaDropable,handleFocus} from "../../interactScript";
-import {CloseSituation,ChangeStyle} from "../../Actions/pilotAction";
+import {CloseSituation,ChangeStyle,ChangeWorkflow} from "../../Actions/pilotAction";
 import {Card,Icon,Button,Form,Input,Timeline} from "antd";
 
 @connect((store)=>{    
@@ -37,10 +37,11 @@ export default class SituationPanel extends React.Component {
             
               case "ANALYSIS":
               {
-  var content = document.getElementById('content');
-    content.classList.add('content-' + Math.floor(Math.random() * 3));
-
-                  break;
+                 var content = document.getElementById('content');
+                 content.classList.add('content-' + Math.floor(Math.random() * 3));
+                 props.dispatch(CloseSituation());
+                 props.dispatch(ChangeWorkflow());
+                 break;
               }
               default:
                   ;

@@ -1,11 +1,10 @@
-export default function Pilot (
+export default function Workflow (
   state = {
    Pilot:null,
    Document:null,
    showPersonnal:false,
-   showDocument:false,
-   display:[]
-
+   showDocument:false
+   
   }, action
 ) {
   switch (action.type) {
@@ -33,12 +32,7 @@ export default function Pilot (
             return {...state,showDocument:false}
         }
 
-        case "OPEN_WORKFLOW_PANEL":{
 
-            var displayarray = state.display;
-            displayarray.push({id:1,type:"Workflow"})
-            return {...state,}
-        }
 
     default:{
 
