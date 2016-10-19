@@ -5,11 +5,9 @@ import { Link } from "react-router";
 import MainPanel from "./MainPanel";
 import DetailPanel from "./DetailPanel";
 import CreatePanel from "../CreatePanel/CreatePanel";
-import EditPanel from "../EditPanel/EditPanel";
-
 //pilot 
 import PersonnalPanel from "./PersonalInfo"
-import {ShowPersonnal,ShowSituation} from "../../Actions/pilotAction"
+import {ShowPersonnal,ShowSituation,AddCardToDisplay} from "../../Actions/pilotAction"
 import { setAreaDropable } from "../../interactScript";
 
 import { AddCard}  from "../../Actions/KnowledgeAction";
@@ -19,6 +17,7 @@ import { ShowMainPanel,ShowEditPanel,ShowCreatePanel } from "../../Actions/Knowl
 import { connect } from "react-redux";
 import { browserHistory } from "react-router";
 import SituationPanel from "./SituationPanel";
+import DisplayWorkFlow from "./DisplayWorkFlow";
 
 import ChangeWorkFlow from "./ChangeWorkFlow";
 
@@ -52,8 +51,6 @@ export default class DisplayPanel extends React.Component {
               var x = event.dragEvent.clientX + window.scrollX;
               var y = event.dragEvent.clientY + window.scrollY;
               var data_id = draggableElement.getAttribute('data-id');
-              console.log(data_id);
-
               switch(draggableElement.getAttribute('data-type')){
               case "ITEM":
               { 
@@ -65,8 +62,20 @@ export default class DisplayPanel extends React.Component {
                   if(data_id ==2)
                   {
                     props.dispatch(ShowSituation());
+                  }
+                  if(data_id ==4)
+                  {
+
+                    var cardinfo = {
+                      x:x,
+                      y:y,
+                      type:"workflowlist"
+                    }
+                    props.dispatch(AddCardToDisplay(cardinfo))
 
                   }
+
+
                   break;
               }
               case "TITLE":
@@ -121,12 +130,13 @@ export default class DisplayPanel extends React.Component {
       {
           Situationdisplay = <SituationPanel></SituationPanel>
       }
+      console.log(pilotinfo.display.length)
       if(pilotinfo.display.length!=0)
       {
      displayarea =  pilotinfo.display.map((one)=>{
-        if(one.type=="Workflow")
+        if(one.type=="workflowlist")
           {
-            return <ChangeWorkFlow key="23124"></ChangeWorkFlow>;
+            return <DisplayWorkFlow /> ;
           }
 
 

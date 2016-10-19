@@ -23,6 +23,18 @@ export function GET_PILOT_DATA()
 
 }
 
+export function AddCardToDisplay(cardinfo)
+{ 
+
+
+  return dispatch=>{
+
+    dispatch({type:"Add_Card_To_Display",payload:cardinfo})
+
+  }
+
+
+}
 export function ClosePersonnal()
 {
 	return dispatch=>{

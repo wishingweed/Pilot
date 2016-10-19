@@ -32,8 +32,12 @@ export default class DataBlock extends React.Component {
     ARTICLE_ID:"3",
     ARTICLE_NAM:"消息",
     length:"100"
-
-  }]
+  },
+  {
+    ARTICLE_ID:"4",
+    ARTICLE_NAM:"查看流程"
+  }
+  ]
 
   if(topfive1.length>0)
   {
