@@ -10,21 +10,19 @@ import PersonnalPanel from "./PersonalInfo"
 import {ShowPersonnal,ShowSituation,AddCardToDisplay} from "../../Actions/pilotAction"
 import { setAreaDropable } from "../../interactScript";
 
-import { AddCard}  from "../../Actions/KnowledgeAction";
-
 import { ShowMainPanel,ShowEditPanel,ShowCreatePanel } from "../../Actions/KnowledgeAction";
 
 import { connect } from "react-redux";
 import { browserHistory } from "react-router";
 import SituationPanel from "./SituationPanel";
+//Workflow
 import DisplayWorkFlow from "./DisplayWorkFlow";
+import WorkFlowDetailPanel from "./WorkFlowDetailPanel"
 
-import ChangeWorkFlow from "./ChangeWorkFlow";
 
 
 @connect((store)=>{    
     return {
-        pilot:store.pilot,
         pilotinfo:store.pilotinfo
     };
     
@@ -69,7 +67,8 @@ export default class DisplayPanel extends React.Component {
                     var cardinfo = {
                       x:x,
                       y:y,
-                      type:"workflowlist"
+                      type:"workflowlist",
+                      cardid:Math.random()*10000000
                     }
                     props.dispatch(AddCardToDisplay(cardinfo))
 
@@ -118,25 +117,22 @@ export default class DisplayPanel extends React.Component {
 
 
   render() {
-    var detaildisplay,Situationdisplay;
-    var displayarea;
+
+       var displayarea;
       const {pilotinfo}=this.props;
-      console.log(pilotinfo)
-      if(pilotinfo.showPersonnal == true)
-      {
-        detaildisplay = <PersonnalPanel></PersonnalPanel>
-      }
-      if(pilotinfo.showDocument == true)
-      {
-          Situationdisplay = <SituationPanel></SituationPanel>
-      }
-      console.log(pilotinfo.display.length)
+      const {status} = this.props;
       if(pilotinfo.display.length!=0)
       {
-     displayarea =  pilotinfo.display.map((one)=>{
+        displayarea =  pilotinfo.display.map((one)=>{
         if(one.type=="workflowlist")
           {
-            return <DisplayWorkFlow /> ;
+            return <DisplayWorkFlow key={one.cardid}  cardid={one.cardid}/> ;
+          }
+          if(one.type="workflowdetail")
+          { 
+            return <WorkFlowDetailPanel key={one.cardid} cardid={one.cardid}/>
+
+            
           }
 
 
@@ -148,8 +144,6 @@ export default class DisplayPanel extends React.Component {
    return (
      <div className="display-panel helpbgkm">
      
-    { detaildisplay }
-    { Situationdisplay }
     { displayarea }
     </div>
       );

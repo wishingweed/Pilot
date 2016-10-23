@@ -32,45 +32,23 @@ export function AddCardToDisplay(cardinfo)
     dispatch({type:"Add_Card_To_Display",payload:cardinfo})
 
   }
-
-
 }
-export function ClosePersonnal()
+
+export function RemoveCard(data)
 {
-	return dispatch=>{
+ 
+ return dispatch=>{
 
-		dispatch({type:"CLOSE_PERSONNAL_PANEL"});
-	}
+  dispatch({type:"Remove_Card",payload:data})
+ }
+
+
 }
 
-export function ShowPersonnal()
-{
-  return dispatch=>{
-    dispatch({type:"OPEN_PERSONNAL_PANEL"})
-   }
-}
-export function CloseSituation()
-{
-	return dispatch=>{
-
-		dispatch({type:"CLOSE_SITUATION_PANEL"});
-	}
-}
-
-export function ShowSituation()
-{
-  return dispatch=>{
-    dispatch({type:"OPEN_SITUATION_PANEL"})
-   }
-}
 export function ChangeStyle()
 {
-
-
   var content = document.getElementById('content');
     content.classList.add('content-' + Math.floor(Math.random() * 3));
-
-
 }
 
 export function ChangeWorkflow()

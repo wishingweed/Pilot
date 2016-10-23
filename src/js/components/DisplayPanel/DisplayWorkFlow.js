@@ -2,10 +2,47 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { connect } from "react-redux"
 
+import {setNodeDragable, setCardDragable,setAreaDropable,handleFocus} from "../../interactScript";
+
+import {RemoveCard,AddCardToDisplay} from "../../Actions/pilotAction"
 import {Table,Card,Icon} from "antd";
 
+
+@connect((store)=>{    
+    return {
+        pilotinfo:store.pilotinfo
+    };
+    
+})
 export default class DisplayWorkFlow extends React.Component { 
 
+    componentDidMount() {
+     setCardDragable(ReactDOM.findDOMNode(this));
+          handleFocus(ReactDOM.findDOMNode(this));   
+
+      }
+
+    WorkFlowDetail(e){
+      console.log(e.target.rel)
+      console.log("workflow detail view")
+      var data = {
+        type:"workflowdetail",
+        workflowid:e.target.rel,
+        cardid:Math.random()*10000000
+      }
+      this.props.dispatch(AddCardToDisplay(data))
+
+    }
+
+  RemoveCard()
+  {
+    console.log(this.props.cardid)
+    var targetcard = {
+      cardid : this.props.cardid
+    }
+    this.props.dispatch(RemoveCard(targetcard));
+
+  }
 
   render() {
 
@@ -13,7 +50,7 @@ const columns = [{
   title: 'Name',
   dataIndex: 'name',
   key: 'name',
-  render: text => <a href="#">{text}</a>,
+  render: (text,record) => <a href="#" onClick={this.WorkFlowDetail.bind(this)} rel={record.key}>{text}</a>,
 }, {
   title: 'Age',
   dataIndex: 'age',
@@ -40,7 +77,7 @@ const columns = [{
 
 const data = [{
   key: '1',
-  name: 'John Brown',
+  name: 'F0 转 F1',
   age: 32,
   address: 'New York No. 1 Lake Park',
 }, {
@@ -57,11 +94,13 @@ const data = [{
 
 
 
+
+
         return (
         <div className="detail-panel">  
-        <Card title="good">
+        <Card title="流程列表" extra={<Icon type="cross" onClick={this.RemoveCard.bind(this)} />}>
         <h1>jskldjaskld</h1>
-         <Table columns={columns} dataSource={data} />
+         <Table columns={columns} dataSource={data}  />
         </Card>
         </div>
       );

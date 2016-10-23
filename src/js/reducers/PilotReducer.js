@@ -11,20 +11,28 @@ export default function Pilot (
     case "Add_Card_To_Display":{
 
     var displayarray = state.display;
-    displayarray.push({id:1,type:"workflowlist"})
+    displayarray.push(action.payload)
     return {...state}
      }
     case "FETCH_PILOT_INFO":{
       return {...state,Pilot:action.payload}
+    }
+
+    case "Remove_Card":
+    {
+      var payload = action.payload;
+       var displayarray=state.display;
+    var newdata =   displayarray.filter((displayone)=>{
+        console.log(displayone);
+
+        return displayone.cardid != payload.cardid
+      })
+
+      return {...state,display:newdata}
 
 
     }
-          case "OPEN_WORKFLOW_PANEL":{
-
-            var displayarray = state.display;
-            displayarray.push({id:1,type:"Workflow"})
-            return {...state,displayarray}
-        }
+          
 
     default:{
 

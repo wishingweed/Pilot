@@ -1,11 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import DataItem from "./DataItem";
-
+import {connect} from "react-redux";
 import { Link } from "react-router";
 import { setNodeDragable } from "../../interactScript";
 
-
+@connect((store)=>{    
+    return {
+      status:store.status
+    };
+    
+})
 export default class DataBlock extends React.Component {
     
     componentDidMount() {
@@ -18,30 +23,54 @@ export default class DataBlock extends React.Component {
 
     render() { 
     var DataItems;
-  var topfive1 = [
-  {ARTICLE_ID:"1",
-    ARTICLE_NAM:"个人信息",
+  var topfive = [
+  {ID:"1",
+    NAME:"个人信息",
     length:"100"
   },
   {
-    ARTICLE_ID:"2",
-    ARTICLE_NAM:"晋升现状",
+    ID:"2",
+    NAME:"晋升现状",
     length:"100"
   },
   {
-    ARTICLE_ID:"3",
-    ARTICLE_NAM:"消息",
+    ID:"3",
+    NAME:"消息",
     length:"100"
   },
   {
-    ARTICLE_ID:"4",
-    ARTICLE_NAM:"查看流程"
+    ID:"4",
+    NAME:"查看流程"
   }
+  ];
+
+  var dataselection=[
+  {
+    ID:"1",
+    NAME:"FTDS",
+    length:"100"},
+    {
+      ID:"2",
+    NAME:"FDD",
+    length:"100"
+    }
+
   ]
+
+
+
+var topfive1;
+console.log(this.props);
+const {status} = this.props;
+
+if(status.status == "INIT")
+  {topfive1=topfive}
+else if(status.status == "MODIFY")
+  topfive1 = dataselection;
 
   if(topfive1.length>0)
   {
-    DataItems = topfive1.map((item)=><DataItem title = {item.ARTICLE_NAM} key = {item.ARTICLE_ID} uniquekey={item.ARTICLE_ID} />);
+    DataItems = topfive1.map((item)=><DataItem title = {item.NAME} key = {item.ID} uniquekey={item.ID} />);
   }
   else
   {

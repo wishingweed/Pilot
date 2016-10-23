@@ -4,7 +4,6 @@ import ReactDOM from "react-dom";
 
 import { connect } from "react-redux"
 import { setCardDragable,setAreaDropable,handleFocus} from "../../interactScript";
-import {ClosePersonnal} from "../../Actions/pilotAction";
 
 import {Card,Icon,Button,Form,Input,InputNumber,Steps,Timeline, Menu, Dropdown} from "antd";
 const Step = Steps.Step;
@@ -42,11 +41,20 @@ const menu = (
     
 })
 export default class PersonnalPanel extends React.Component {
+ 
+    componentDidMount() {
+        this.interactable = setNodeDragable(ReactDOM.findDOMNode(this));
+    }
+    componentWillUnmount() {
+      this.interactable.unset();
+      this.interactable = null;
+    }
+
 
 
     render() {
         return (
-				<div>
+				<div class="detail-panel">
 				<Card >
 		 <Timeline>
     <Timeline.Item>
