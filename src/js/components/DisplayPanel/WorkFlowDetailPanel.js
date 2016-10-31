@@ -23,9 +23,12 @@ export default class WorkFlowDetail extends React.Component {
 	componentDidMount(){
 
       const props = this.props;
-      const that = this;
+      const that = this;	
       const {status} = this.props;
+
+      if(status.status == "init")
       setCardDragable(ReactDOM.findDOMNode(this));  
+
       handleFocus(ReactDOM.findDOMNode(this));   
        this.interactable = setAreaDropable({
 
