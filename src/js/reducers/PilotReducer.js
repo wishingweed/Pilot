@@ -10,13 +10,7 @@ export default function Pilot (
   switch (action.type) {
 
     case "Add_Card_To_Display":{
-<<<<<<< HEAD
-      var displayarray = state.display;
-      displayarray.push(action.payload)
-      return {...state}
-    }
-    
-=======
+
 
     const displayarray = state.display;
     const {payload} = action ; 
@@ -26,9 +20,13 @@ export default function Pilot (
     displayarray.push(payload)
     return {...state}
      }
->>>>>>> d3f6a30b9f76e828d5370b41db0e9577f647c97f
     case "FETCH_PILOT_INFO":{
       return {...state,Pilot:action.payload}
+    }
+    case "CHANGE_TO_MODIFY":{
+
+      return {...state,status:"MODIFY"}
+
     }
 
     case "Remove_Card":
@@ -42,8 +40,6 @@ export default function Pilot (
       })
 
       return {...state,display:newdata}
-
-
     }
           
 

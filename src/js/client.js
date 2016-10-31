@@ -4,9 +4,6 @@ import {Router,Route,IndexRoute,hashHistory,browserHistory} from "react-router";
 import Layout from "./components/Layout";
 import { Provider } from "react-redux";
 import store from "./store";
-import DisplayPanel from "./components/DisplayPanel/DisplayPanel";
-
-import DetailPanel from "./components/DisplayPanel/DetailPanel";
 
 import Login from "./components/Login/login"
 import Drag from "./components/Drag"

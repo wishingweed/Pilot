@@ -1,7 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import TableCharts from "./TableCharts";
-import StrategyPanel from "./StrategyPanel";
 import {Card,Icon,Timeline} from "antd";
 import {connect} from "react-redux"
 import { setCardDragable,handleFocus,setAreaDropable} from "../../interactScript";

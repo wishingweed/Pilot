@@ -2,11 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Button,Card,Icon } from "antd";
 import { Link } from "react-router";
-import MainPanel from "./MainPanel";
-import DetailPanel from "./DetailPanel";
 import CreatePanel from "../CreatePanel/CreatePanel";
 //pilot 
-import PersonnalPanel from "./PersonalInfo"
 import {ShowPersonnal,ShowSituation,AddCardToDisplay} from "../../Actions/pilotAction"
 import { setAreaDropable } from "../../interactScript";
 
@@ -14,7 +11,6 @@ import { ShowMainPanel,ShowEditPanel,ShowCreatePanel } from "../../Actions/Knowl
 
 import { connect } from "react-redux";
 import { browserHistory } from "react-router";
-import SituationPanel from "./SituationPanel";
 //Workflow
 import DisplayWorkFlow from "./DisplayWorkFlow";
 import WorkFlowDetailPanel from "./WorkFlowDetailPanel"
@@ -53,14 +49,6 @@ export default class DisplayPanel extends React.Component {
               case "ITEM":
               { 
 
-                  if(data_id==1)
-                  {
-                    props.dispatch(ShowPersonnal());
-                  }
-                  if(data_id ==2)
-                  {
-                    props.dispatch(ShowSituation());
-                  }
                   if(data_id ==4)
                   {
 

@@ -61,6 +61,7 @@ export default class DataBlock extends React.Component {
 
 var topfive1;
 const {pilot} = this.props;
+console.log(pilot.status)
 if(pilot.status == "INIT")
   {topfive1=topfive}
 else if(pilot.status == "MODIFY")
