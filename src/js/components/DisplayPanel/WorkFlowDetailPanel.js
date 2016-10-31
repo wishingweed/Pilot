@@ -53,16 +53,19 @@ export default class WorkFlowDetail extends React.Component {
 
     
     render() {
+        var steps = this.props.pilotinfo.steps;
         return (
         <div  class="workFlowDetailPanel">  
-        <Card  title="F0->F1" extra={<Icon type="cross" onClick={this.RemoveCard.bind(this)} />}>
-        		<Timeline>
-			    <Timeline.Item>Create a services site 2015-09-01</Timeline.Item>
-			    <Timeline.Item>Solve initial network problems 2015-09-01</Timeline.Item>
-			    <Timeline.Item>Technical testing 2015-09-01</Timeline.Item>
-			    <Timeline.Item>Network problems being solved 2015-09-01</Timeline.Item>
-				</Timeline>
-		</Card>
+          <Card  title="F0->F1" extra={<Icon type="cross" onClick={this.RemoveCard.bind(this)} />}>
+          <Timeline>
+           {
+            steps.map((one,i)=>{
+            return <Timeline.Item key={i}>{ one }</Timeline.Item>
+            })
+           }
+				  </Timeline>
+
+		      </Card>
         </div>
       );
   }

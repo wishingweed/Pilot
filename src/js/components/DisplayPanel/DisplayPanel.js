@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Button,Card,Icon } from "antd";
+import { Button,Card,Icon,Col,Row } from "antd";
 import { Link } from "react-router";
 import CreatePanel from "../CreatePanel/CreatePanel";
 //pilot 
@@ -104,28 +104,45 @@ export default class DisplayPanel extends React.Component {
   render() {
       var displayarea;
       const {pilotinfo}=this.props;
-      const {status} = this.props;
-      if(pilotinfo.display.length!=0)
+      const {status} = pilotinfo;
+      var steps = this.props.pilotinfo.steps;
+      if(status == "INIT")
       {
-        displayarea =  pilotinfo.display.map((one)=>{
-        if(one.type=="workflowlist")
-          {
-            return <DisplayWorkFlow key={one.cardid}  cardid={one.cardid}/> ;
-          }
-          if(one.type="workflowdetail")
-          { 
-            return <WorkFlowDetailPanel key={one.cardid} cardid={one.cardid}/>     
-          }
-        });
+        if(pilotinfo.display.length!=0)
+        {
+          displayarea =  pilotinfo.display.map((one)=>{
+          if(one.type=="workflowlist")
+            {
+              return <DisplayWorkFlow key={one.cardid}  cardid={one.cardid}/> ;
+            }
+              if(one.type="workflowdetail")
+            { 
+              return <WorkFlowDetailPanel key={one.cardid} cardid={one.cardid}/>     
+            }
+          });
+        }
+      }
+      if(status == "MODIFY")
+      {
+        if(steps.length!=0)
+        {
+            displayarea = 
+              <Row>
+                <Col span="8">
+                {
+                  steps.map((one,i) => {
+                  return <Card title={one} bordered={false}> "courses" </Card>
+                  })
+                }
+                </Col>
+              </Row>
+        }
+      }
 
-      } 
-
-
-   return (
-     <div className="display-panel helpbgkm">
-     
-    { displayarea }
-    </div>
+      return (
+      <div className="display-panel helpbgkm">  
+        { displayarea }
+      </div>
       );
   }
 }

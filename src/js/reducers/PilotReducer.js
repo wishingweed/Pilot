@@ -2,11 +2,12 @@ export default function Pilot (
   state = {
    Pilot:null,
    Document:null,
-    status:"INIT",
-   display:[]
-
-  }, action
-) {
+   status:"INIT",
+   display:[],
+   modify:[],//用来展示我们修改后的steps的panel
+   steps:["step1","step2","step3","step4"]//用来展示每个升级的具体步骤。
+  }, action) 
+  {
   switch (action.type) {
 
     case "Add_Card_To_Display":{
@@ -14,8 +15,8 @@ export default function Pilot (
 
     const displayarray = state.display;
     const {payload} = action ; 
-
     payload.status = state.status;
+
     payload.cardid = (new Date().getTime()+ Math.floor(Math.random() * 999999)).toString(31);
     displayarray.push(payload)
     return {...state}
@@ -24,9 +25,7 @@ export default function Pilot (
       return {...state,Pilot:action.payload}
     }
     case "CHANGE_TO_MODIFY":{
-
       return {...state,status:"MODIFY"}
-
     }
 
     case "Remove_Card":
