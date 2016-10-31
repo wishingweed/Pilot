@@ -2,6 +2,7 @@ export default function Pilot (
   state = {
    Pilot:null,
    Document:null,
+    status:"INIT",
    display:[]
 
   }, action
@@ -10,8 +11,12 @@ export default function Pilot (
 
     case "Add_Card_To_Display":{
 
-    var displayarray = state.display;
-    displayarray.push(action.payload)
+    const displayarray = state.display;
+    const {payload} = action ; 
+
+    payload.status = state.status;
+    payload.cardid = (new Date().getTime()+ Math.floor(Math.random() * 999999)).toString(31);
+    displayarray.push(payload)
     return {...state}
      }
     case "FETCH_PILOT_INFO":{

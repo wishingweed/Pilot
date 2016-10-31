@@ -7,7 +7,7 @@ import { setNodeDragable } from "../../interactScript";
 
 @connect((store)=>{    
     return {
-      status:store.status
+      pilot:store.pilotinfo
     };
     
 })
@@ -60,12 +60,10 @@ export default class DataBlock extends React.Component {
 
 
 var topfive1;
-console.log(this.props);
-const {status} = this.props;
-
-if(status.status == "INIT")
+const {pilot} = this.props;
+if(pilot.status == "INIT")
   {topfive1=topfive}
-else if(status.status == "MODIFY")
+else if(pilot.status == "MODIFY")
   topfive1 = dataselection;
 
   if(topfive1.length>0)

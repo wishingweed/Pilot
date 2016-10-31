@@ -68,7 +68,7 @@ export default class DisplayPanel extends React.Component {
                       x:x,
                       y:y,
                       type:"workflowlist",
-                      cardid:Math.random()*10000000
+                      cardid:(new Date() + Math.floor(Math.random() * 999999)).toString(31)
                     }
                     props.dispatch(AddCardToDisplay(cardinfo))
 

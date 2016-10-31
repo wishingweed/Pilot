@@ -6,10 +6,8 @@ import {Card,Icon,Timeline} from "antd";
 import {connect} from "react-redux"
 import { setCardDragable,handleFocus,setAreaDropable} from "../../interactScript";
 
-import {RemoveCard,ChangeStyle} from "../../Actions/pilotAction"
+import {RemoveCard,ChangeStyle,ChangeToModify} from "../../Actions/pilotAction"
 
-import {ChangeToModify} from "../../Actions/StatusAction"
-import BestPanel from "./BestPanel";
 @connect((store)=>{    
     return {
     	status:status,

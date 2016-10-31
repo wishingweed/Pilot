@@ -41,8 +41,6 @@ export function RemoveCard(data)
 
   dispatch({type:"Remove_Card",payload:data})
  }
-
-
 }
 
 export function ChangeStyle()
@@ -58,6 +56,16 @@ export function ChangeWorkflow()
     dispatch({type:"OPEN_WORKFLOW_PANEL"})
 
   }
+}
+
+
+export function ChangeToModify()
+{
+   return dispatch=>{
+   
+    dispatch({type:"CHANGE_TO_MODIFY"});
+    }
+
 
 
 }
