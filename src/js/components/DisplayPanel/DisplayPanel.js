@@ -71,10 +71,7 @@ export default class DisplayPanel extends React.Component {
                       cardid:Math.random()*10000000
                     }
                     props.dispatch(AddCardToDisplay(cardinfo))
-
                   }
-
-
                   break;
               }
               case "TITLE":
@@ -117,8 +114,7 @@ export default class DisplayPanel extends React.Component {
 
 
   render() {
-
-       var displayarea;
+      var displayarea;
       const {pilotinfo}=this.props;
       const {status} = this.props;
       if(pilotinfo.display.length!=0)
@@ -130,12 +126,8 @@ export default class DisplayPanel extends React.Component {
           }
           if(one.type="workflowdetail")
           { 
-            return <WorkFlowDetailPanel key={one.cardid} cardid={one.cardid}/>
-
-            
+            return <WorkFlowDetailPanel key={one.cardid} cardid={one.cardid}/>     
           }
-
-
         });
 
       } 

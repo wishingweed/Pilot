@@ -9,11 +9,11 @@ export default function Pilot (
   switch (action.type) {
 
     case "Add_Card_To_Display":{
-
-    var displayarray = state.display;
-    displayarray.push(action.payload)
-    return {...state}
-     }
+      var displayarray = state.display;
+      displayarray.push(action.payload)
+      return {...state}
+    }
+    
     case "FETCH_PILOT_INFO":{
       return {...state,Pilot:action.payload}
     }

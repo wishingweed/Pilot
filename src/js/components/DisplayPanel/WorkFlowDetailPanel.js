@@ -32,13 +32,11 @@ export default class WorkFlowDetail extends React.Component {
           element: ReactDOM.findDOMNode(this),
           accept: '.function-button',
           ondrop: function(event) {
-
- 		 var content = document.getElementById('content');
-    	content.classList.add('content-' + Math.floor(Math.random() * 3));
+ 		      var content = document.getElementById('content');
+    	    content.classList.add('content-' + Math.floor(Math.random() * 3));
           		
       		//change status 
       	 	props.dispatch(ChangeToModify());
-
       		//add change card
 
               

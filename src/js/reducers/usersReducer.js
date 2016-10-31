@@ -17,12 +17,9 @@ export default function reducer(state={
                  return {...state,fetching:true} 
                  
                 }
-case "FETCH_USER_FULFILLED":{
-    
-    return {...state,fetching:false,fetched:true,user:action.payload,}
-}
-            
-        }
-    
+            case "FETCH_USER_FULFILLED":{
+            return {...state,fetching:false,fetched:true,user:action.payload,}
+        }          
+        } 
         return state;
 }
