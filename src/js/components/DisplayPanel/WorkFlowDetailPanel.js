@@ -6,10 +6,8 @@ import {Card,Icon,Timeline} from "antd";
 import {connect} from "react-redux"
 import { setCardDragable,handleFocus,setAreaDropable} from "../../interactScript";
 
-import {RemoveCard,ChangeStyle} from "../../Actions/pilotAction"
+import {RemoveCard,ChangeStyle,ChangeToModify} from "../../Actions/pilotAction"
 
-import {ChangeToModify} from "../../Actions/StatusAction"
-import BestPanel from "./BestPanel";
 @connect((store)=>{    
     return {
     	status:status,
@@ -23,9 +21,12 @@ export default class WorkFlowDetail extends React.Component {
 	componentDidMount(){
 
       const props = this.props;
-      const that = this;
+      const that = this;	
       const {status} = this.props;
+
+      if(status.status == "init")
       setCardDragable(ReactDOM.findDOMNode(this));  
+
       handleFocus(ReactDOM.findDOMNode(this));   
        this.interactable = setAreaDropable({
 
