@@ -91,14 +91,14 @@ export default function Pilot (
 
     case "Add_Card_To_Display":{
 
-
     const displayarray = state.display;
     const {payload} = action ; 
 
+      console.log(payload)
     payload.status = state.status;
     payload.cardid = (new Date().getTime()+ Math.floor(Math.random() * 999999)).toString(31);
     displayarray.push(payload)
-    return {...state}
+    return {...state,display:displayarray}
      }
     case "FETCH_PILOT_INFO":{
       return {...state,Pilot:action.payload}

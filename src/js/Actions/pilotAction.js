@@ -23,13 +23,13 @@ export function GET_PILOT_DATA()
 
 }
 
-export function AddCardToDisplay(cardinfo)
+export function AddCardToDisplay(test)
 { 
 
-
+console.log(test)
   return dispatch=>{
 
-    dispatch({type:"Add_Card_To_Display",payload:cardinfo})
+    dispatch({type:"Add_Card_To_Display",payload:test})
 
   }
 }

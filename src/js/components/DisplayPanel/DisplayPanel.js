@@ -4,10 +4,8 @@ import { Button,Card,Icon } from "antd";
 import { Link } from "react-router";
 import CreatePanel from "../CreatePanel/CreatePanel";
 //pilot 
-import {ShowPersonnal,ShowSituation,AddCardToDisplay} from "../../Actions/pilotAction"
+import {AddCardToDisplay} from "../../Actions/pilotAction"
 import { setAreaDropable } from "../../interactScript";
-
-import { ShowMainPanel,ShowEditPanel,ShowCreatePanel } from "../../Actions/KnowledgeAction";
 
 import { connect } from "react-redux";
 import { browserHistory } from "react-router";
@@ -15,11 +13,13 @@ import { browserHistory } from "react-router";
 import DisplayWorkFlow from "./DisplayWorkFlow";
 import WorkFlowDetailPanel from "./WorkFlowDetailPanel"
 
+import Courselist from "./Courselist";
+import Coursedetail from "./Coursedetail";
 
 
 @connect((store)=>{    
     return {
-        pilotinfo:store.pilotinfo
+        pilot:store.pilotinfo
     };
     
 })
@@ -49,16 +49,27 @@ export default class DisplayPanel extends React.Component {
               case "ITEM":
               { 
 
+                console.log(data_id)
                   if(data_id ==4)
                   {
 
                     var cardinfo = {
                       x:x,
                       y:y,
-                      type:"workflowlist",
-                      cardid:(new Date() + Math.floor(Math.random() * 999999)).toString(31)
-                    }
+                      type:"workflowlist"
+                      }
                     props.dispatch(AddCardToDisplay(cardinfo))
+                  }
+                  else if(data_id==5)
+                  {
+                    var cardinfo1 = {
+                      x:x,
+                      y:y,
+                      type:"courselist"
+                    }
+                    console.log(cardinfo1)
+                    props.dispatch(AddCardToDisplay(cardinfo1))
+
                   }
                   break;
               }
@@ -80,6 +91,7 @@ export default class DisplayPanel extends React.Component {
                   else if(data_id == "4"){
                     browserHistory.push("/trend")
                   }
+
                   break;
               }
               default:
@@ -103,18 +115,27 @@ export default class DisplayPanel extends React.Component {
 
   render() {
       var displayarea;
-      const {pilotinfo}=this.props;
+      const {pilot}=this.props;
       const {status} = this.props;
-      if(pilotinfo.display.length!=0)
+      if(pilot.display.length!=0)
       {
-        displayarea =  pilotinfo.display.map((one)=>{
+        displayarea =  pilot.display.map((one)=>{
         if(one.type=="workflowlist")
           {
             return <DisplayWorkFlow key={one.cardid}  cardid={one.cardid}/> ;
           }
-          if(one.type="workflowdetail")
+          if(one.type=="workflowdetail")
           { 
             return <WorkFlowDetailPanel key={one.cardid} cardid={one.cardid}/>     
+          }
+          if(one.type=="courselist")
+          {
+            return <Courselist key={one.cardid} cardid={one.cardid} />
+
+          }
+          if(one.type == "coursedetail")
+          {
+            return <Coursedetail key={one.cardid} cardid={one.cardid} courseid={one.course_id} />
           }
         });
 

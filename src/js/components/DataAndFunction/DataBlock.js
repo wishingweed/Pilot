@@ -1,3 +1,4 @@
+
 import React from "react";
 import ReactDOM from "react-dom";
 import DataItem from "./DataItem";
@@ -41,6 +42,10 @@ export default class DataBlock extends React.Component {
   {
     ID:"4",
     NAME:"查看流程"
+  },
+  {
+    ID:"5",
+    NAME:"查看课程"
   }
   ];
 
@@ -61,7 +66,7 @@ export default class DataBlock extends React.Component {
 
 var topfive1;
 const {pilot} = this.props;
-console.log(pilot.status)
+console.log(pilot.status);
 if(pilot.status == "INIT")
   {topfive1=topfive}
 else if(pilot.status == "MODIFY")
