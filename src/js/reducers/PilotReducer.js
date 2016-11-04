@@ -51,13 +51,13 @@ export default function Pilot (
     steps:[
     {
       sequence:1,
-      course_id:"course1",
-      name:"FTD第一课"
+      course_id:[{course_id:"course1",sequence:1},{course_id:"course2",sequence:2}],
+      name:"固态模拟机学习"
     },
     {
       sequence:2,
-      course_id:"course2",
-          name:"FTD第二课"
+      course_id:[{course_id:"table1"}],
+          name:"注册学习"
     },
     {
       sequence:3,

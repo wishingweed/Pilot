@@ -76,20 +76,18 @@ export default class DisplayPanel extends React.Component {
               case "TITLE":
               {
                   
-                  props.dispatch(ShowMainPanel());
-                  break;
+   
               }
               case "FUNC":
               {
                   
                   if(data_id == "1"){
-                      props.dispatch(ShowCreatePanel());
+                    
                   }
                   else if(data_id == "2")
                   {
                   }
                   else if(data_id == "4"){
-                    browserHistory.push("/trend")
                   }
 
                   break;

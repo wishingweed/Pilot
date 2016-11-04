@@ -14,13 +14,6 @@ import { setNodeDragable } from "../../interactScript";
 })
 export default class DataBlock extends React.Component {
     
-    componentDidMount() {
-        this.interactable = setNodeDragable(ReactDOM.findDOMNode(this));
-    }
-    componentWillUnmount() {
-      this.interactable.unset();
-      this.interactable = null;
-    }
 
     render() { 
     var DataItems;
