@@ -2,68 +2,65 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { connect } from "react-redux"
 import { setCardDragable,setAreaDropable,handleFocus} from "../../interactScript";
-import {Card,Icon,Button,Form,Input,InputNumber,Steps,Timeline, Menu, Dropdown} from "antd";
-const Step = Steps.Step;
-const array = [...Array(Math.floor(Math.random() * 3) + 3)];
-const steps = array.map((item, i) => ({
-  title: 'Step ${i + 1}',
-}));
-const onClick = function (e) {
-	console.log(e);
-	const {props} =e.item;
-	console.log(props.children)
-};
+import {Card,Icon,Button,Form,Input,InputNumber,Steps,Timeline, Menu, Dropdown,Progress,Row,Col} from "antd";
+import {RemoveCard} from "../../Actions/pilotAction"
 
-
-const menu = (
-  <Menu onClick={onClick}>
-    <Menu.Item key="hehe">
-    	FTS
-    </Menu.Item>
-    <Menu.Item>
- 		FdSS
-    </Menu.Item>
-    <Menu.Item>
-      THRID cLASS
-    </Menu.Item>
-  </Menu>
-);
-
+import PersonalForm from "./personalform"
 
 
 @connect((store)=>{    
     return {
-        Pilot:store.pilotinfo.Pilot
+        pilotinfo:store.pilotinfo
     };
     
 })
 export default class PersonnalPanel extends React.Component {
  
     componentDidMount() {
-        this.interactable = setNodeDragable(ReactDOM.findDOMNode(this));
+       setCardDragable(ReactDOM.findDOMNode(this));
     }
     componentWillUnmount() {
-      this.interactable.unset();
-      this.interactable = null;
     }
 
+  RemoveCard()
+  {
+    var data={
+
+      cardid:this.props.cardid
+    }
+    this.props.dispatch(RemoveCard(data))
+  }
 
 
     render() {
+      const { pilotinfo} = this.props;
+      console.log(pilotinfo)
+      const {Pilot} = pilotinfo;
+      const {flightinfo} = Pilot;
+
         return (
 				<div class="detail-panel">
-				<Card >
-		 <Timeline>
-    <Timeline.Item>
-    <Dropdown overlay={menu}>
-    <a className="ant-dropdown-link" href="#">
-      Hover me <Icon type="down" />
-    </a>
-  </Dropdown></Timeline.Item>
-    <Timeline.Item>Solve initial network problems 2015-09-01</Timeline.Item>
-    <Timeline.Item>Technical testing 2015-09-01</Timeline.Item>
-    <Timeline.Item>Network problems being solved 2015-09-01</Timeline.Item>
-  </Timeline>
+
+        <Card title="个人资料"  extra={<Icon type="cross" onClick={this.RemoveCard.bind(this)}/>}>
+
+        <Row>
+      <Col span={12}> 
+      <h3>总飞行时间:</h3>
+        <p class="margin100">
+        <Progress type="circle" percent={100} status="active" format={() => {return flightinfo.flightTime+"小时"} } />
+        </p>
+      </Col>
+      <Col span={12} >
+
+       <h3>总飞行航段:</h3>
+       <p class="margin100">
+        <Progress type="circle" percent={100} format={() => {return flightinfo.flightRoute+'个'} } />
+       </p>
+       </Col>
+    </Row>
+     
+    <PersonalForm personaldata={pilotinfo.Pilot} />
+
 				</Card>
 				</div>
       );

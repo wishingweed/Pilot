@@ -3,6 +3,7 @@ export default function Pilot (
 
    Pilot:{
     userid:"1",
+    username:"caobin",
     name:"曹斌",
     password:"test",
     role:"ADM",
@@ -10,9 +11,9 @@ export default function Pilot (
       current_level:"F0",
       target_level:"F1"
     },
-    filghtinfo:{
-      filghtTime:900,
-      filghtRoute:100
+    flightinfo:{
+      flightTime:900,
+      flightRoute:100
     },
     department:"国航第九飞行编队",
     company:"上海国航",
@@ -21,12 +22,18 @@ export default function Pilot (
    Document:{
     userid:"1",
     start_date:"2016-10-10",
-    level:{
-      previous_level:"F0",
-      target_level:"F1"
-    },
+    previous_level:"F0",
+    target_level:"F1",
+    status:"inprocess",
     workflow_id:"workflow1",
-    courses:[{
+    steps:[{
+    name:"固态模拟机学习",
+    status:"inprocess",
+    sequence:1,
+    courses:[
+    {
+    status:"inprocess", 
+    sequence:1,
     course_id:"course1",
     title:"固态模拟机乱飞",
     description:"必须飞的",
@@ -34,12 +41,61 @@ export default function Pilot (
     details:[{
       id:1,
       title:"测试飞行",
-      result:true},{
+      result:true},
+      {
         id:2,
-        title:"使用操作杆",result:true}
+        title:"使用操作杆",
+        result:true}
         ],
-    overallcomment:"passed",
-   },],
+    overallcomment:"passed"
+    },
+    {
+    status:"non",
+    sequence:2,
+    course_id:"course2",
+    title:"固态模拟机乱11飞22",
+    description:"必须飞的324432",
+    category:"课程",
+    details:[
+    {id:1,
+      title:"学会模拟"},
+      {id:2,
+        title:"误操作"}
+    ],
+    overallcomment:"shitted"
+   }]//end of course
+    
+   },//end of step 1 
+   {
+    name:"注册学习",
+    status:null,
+    sequence:2,
+      courses:[
+      {
+        course_id:"table1",
+        name:"表格1",
+        status:null
+      }
+      ],
+   }, //end of step2 
+   {
+      name:"FTD第三课",
+      status:null,
+      sequence:3,
+      courses:[
+      {
+         course_id:"course3",
+         name:"第四课",
+         status:null
+      }
+
+      ],
+
+   }
+
+
+
+   ], //end of steps
    },
    role:"ADM",
    status:"INIT",
@@ -54,17 +110,17 @@ export default function Pilot (
     steps:[
     {
       sequence:1,
-      course_id:[{course_id:"course1",sequence:1},{course_id:"course2",sequence:2}],
+      courses:[{course_id:"course1",sequence:1},{course_id:"course2",sequence:2}],
       name:"固态模拟机学习"
     },
     {
       sequence:2,
-      course_id:[{course_id:"table1"}],
+      courses:[{course_id:"table1"}],
           name:"注册学习"
     },
     {
       sequence:3,
-      course_id:"course3",
+      courses:"course3",
       name:"FTD第三课"
     }
     ]
@@ -85,7 +141,13 @@ export default function Pilot (
     title:"固态模拟机乱11飞22",
     description:"必须飞的324432",
     category:"课程",
-    details:[]
+    details:[
+    {id:1,
+      title:"学会模拟"},
+      {id:2,
+        title:"误操作"}
+
+    ]
    }
    ]
   }, action
