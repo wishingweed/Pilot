@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Button,Card,Icon } from "antd";
+import { Button,Card,Icon,Col,Row } from "antd";
 import { Link } from "react-router";
 import CreatePanel from "../CreatePanel/CreatePanel";
 //pilot 
@@ -12,6 +12,7 @@ import { browserHistory } from "react-router";
 //Workflow
 import DisplayWorkFlow from "./DisplayWorkFlow";
 import WorkFlowDetailPanel from "./WorkFlowDetailPanel"
+import ChangePanel from "./changePanel"
 
 import Courselist from "./Courselist";
 import Coursedetail from "./Coursedetail";
@@ -19,7 +20,7 @@ import Coursedetail from "./Coursedetail";
 
 @connect((store)=>{    
     return {
-        pilot:store.pilotinfo
+        pilotinfo:store.pilotinfo
     };
     
 })
@@ -113,20 +114,27 @@ export default class DisplayPanel extends React.Component {
 
   render() {
       var displayarea;
-      const {pilot}=this.props;
-      const {status} = this.props;
-      if(pilot.display.length!=0)
+      const {pilotinfo}=this.props;
+      const { status } = pilotinfo;
+      console.log("pilotinfo",pilotinfo);
+      const { activeworkflow } = pilotinfo;
+      var { Workflows } = pilotinfo;
+
+      // var steps = this.props.pilotinfo.steps;
+      if(status == "INIT")
       {
-        displayarea =  pilot.display.map((one)=>{
-        if(one.type=="workflowlist")
-          {
-            return <DisplayWorkFlow key={one.cardid}  cardid={one.cardid}/> ;
-          }
-          if(one.type=="workflowdetail")
-          { 
-            return <WorkFlowDetailPanel key={one.cardid} cardid={one.cardid}/>     
-          }
-          if(one.type=="courselist")
+        if(pilotinfo.display.length!=0)
+        {
+          displayarea =  pilotinfo.display.map((one)=>{
+          if(one.type=="workflowlist")
+            {
+              return <DisplayWorkFlow key={one.cardid}  cardid={one.cardid}/> ;
+            }
+              if(one.type=="workflowdetail")
+            { 
+              return <WorkFlowDetailPanel key={one.cardid} cardid={one.cardid} workflowid = {one.workflowid}/>     
+            }
+              if(one.type=="courselist")
           {
             return <Courselist key={one.cardid} cardid={one.cardid} />
 
@@ -135,16 +143,28 @@ export default class DisplayPanel extends React.Component {
           {
             return <Coursedetail key={one.cardid} cardid={one.cardid} courseid={one.course_id} />
           }
+          });
+        }
+      }
+      if(status == "MODIFY")
+      {
+        const targetdata = Workflows.filter((workflow)=>{
+          if(workflow.workflow_id == activeworkflow)
+          {
+            return workflow;
+          }
+        
         });
+        var steps = targetdata[0].steps;
+        console.log("steps",steps);
+        if(steps.length!=0)
+          displayarea =  <ChangePanel steps = {steps} />;
+      }
 
-      } 
-
-
-   return (
-     <div className="display-panel helpbgkm">
-     
-    { displayarea }
-    </div>
+      return (
+      <div className="display-panel helpbgkm">  
+        { displayarea }
+      </div>
       );
   }
 }

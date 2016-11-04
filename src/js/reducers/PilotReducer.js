@@ -1,5 +1,6 @@
 export default function Pilot (
   state = {
+
    Pilot:{
     userid:"1",
     name:"曹斌",
@@ -42,9 +43,11 @@ export default function Pilot (
    },
    role:"ADM",
    status:"INIT",
+   activeworkflow:"",
    display:[],
    Workflows:[{
     workflow_id:"workflow1",
+    title:"转生流程1",
     description:"F0->F1 转升流程",
     previous_level:"F0",
     target_level:"F1",
@@ -93,8 +96,6 @@ export default function Pilot (
 
     const displayarray = state.display;
     const {payload} = action ; 
-
-      console.log(payload)
     payload.status = state.status;
     payload.cardid = (new Date().getTime()+ Math.floor(Math.random() * 999999)).toString(31);
     displayarray.push(payload)
@@ -104,9 +105,7 @@ export default function Pilot (
       return {...state,Pilot:action.payload}
     }
     case "CHANGE_TO_MODIFY":{
-
-      return {...state,status:"MODIFY"}
-
+      return {...state,status:"MODIFY",activeworkflow:action.payload}
     }
 
     case "Remove_Card":
