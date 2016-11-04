@@ -59,13 +59,9 @@ export function ChangeWorkflow()
 }
 
 
-export function ChangeToModify()
+export function ChangeToModify(workflowid)
 {
    return dispatch=>{
-   
-    dispatch({type:"CHANGE_TO_MODIFY"});
+    dispatch({type:"CHANGE_TO_MODIFY",payload:workflowid});
     }
-
-
-
 }

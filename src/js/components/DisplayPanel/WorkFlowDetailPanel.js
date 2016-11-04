@@ -9,7 +9,7 @@ import {RemoveCard,ChangeStyle,ChangeToModify} from "../../Actions/pilotAction"
 @connect((store)=>{    
     return {
     	status:status,
-        pilotinfo:store.pilotinfo
+      pilotinfo:store.pilotinfo
     };
     
 })
@@ -21,6 +21,7 @@ export default class WorkFlowDetail extends React.Component {
       const props = this.props;
       const that = this;	
       const {status} = this.props;
+      var workflowid = this.props.workflowid;
 
       if(status.status == "init")
       setCardDragable(ReactDOM.findDOMNode(this));  
@@ -32,10 +33,9 @@ export default class WorkFlowDetail extends React.Component {
           accept: '.function-button',
           ondrop: function(event) {
  		      var content = document.getElementById('content');
-    	    content.classList.add('content-' + Math.floor(Math.random() * 3));
-          		
+    	    content.classList.add('content-' + Math.floor(Math.random() * 3));		
       		//change status 
-      	 	props.dispatch(ChangeToModify());
+      	 	props.dispatch(ChangeToModify(workflowid));
       		//add change card
 
               
@@ -53,14 +53,23 @@ export default class WorkFlowDetail extends React.Component {
 
     
     render() {
-        var steps = this.props.pilotinfo.steps;
+        var workflowid = this.props.workflowid;
+        // console.log("this.props",this.props);
+        const {Workflows} =this.props.pilotinfo; 
+        const targetdata = Workflows.filter((workflow)=>{
+          if(workflow.workflow_id == workflowid)
+          {
+            return workflow;
+          }
+        })
+        var steps = targetdata[0].steps;
         return (
         <div  class="workFlowDetailPanel">  
           <Card  title="F0->F1" extra={<Icon type="cross" onClick={this.RemoveCard.bind(this)} />}>
           <Timeline>
            {
             steps.map((one,i)=>{
-            return <Timeline.Item key={i}>{ one }</Timeline.Item>
+            return <Timeline.Item key={i}>{ one.name }</Timeline.Item>
             })
            }
 				  </Timeline>

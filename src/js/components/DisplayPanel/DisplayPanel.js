@@ -14,6 +14,7 @@ import { browserHistory } from "react-router";
 //Workflow
 import DisplayWorkFlow from "./DisplayWorkFlow";
 import WorkFlowDetailPanel from "./WorkFlowDetailPanel"
+import ChangePanel from "./changePanel"
 
 
 
@@ -104,8 +105,12 @@ export default class DisplayPanel extends React.Component {
   render() {
       var displayarea;
       const {pilotinfo}=this.props;
-      const {status} = pilotinfo;
-      var steps = this.props.pilotinfo.steps;
+      const { status } = pilotinfo;
+      console.log("pilotinfo",pilotinfo);
+      const { activeworkflow } = pilotinfo;
+      var { Workflows } = pilotinfo;
+
+      // var steps = this.props.pilotinfo.steps;
       if(status == "INIT")
       {
         if(pilotinfo.display.length!=0)
@@ -117,26 +122,26 @@ export default class DisplayPanel extends React.Component {
             }
               if(one.type="workflowdetail")
             { 
-              return <WorkFlowDetailPanel key={one.cardid} cardid={one.cardid}/>     
+              return <WorkFlowDetailPanel key={one.cardid} cardid={one.cardid} workflowid = {one.workflowid}/>     
             }
           });
         }
       }
       if(status == "MODIFY")
       {
+        const targetdata = Workflows.filter((workflow)=>{
+          console.log("workflow_id is ", workflow.workflow_id);
+          console.log("activeworkflow ",activeworkflow);
+          if(workflow.workflow_id == activeworkflow)
+          {
+            return workflow;
+          }
+        });
+        var steps = targetdata[0].steps;
+        console.log("steps",steps);
         if(steps.length!=0)
-        {
-            displayarea = 
-              <Row>
-                <Col span="8">
-                {
-                  steps.map((one,i) => {
-                  return <Card title={one} bordered={false}> "courses" </Card>
-                  })
-                }
-                </Col>
-              </Row>
-        }
+          displayarea =  <ChangePanel steps = {steps} />;
+        console.log("hellohello",displayarea);
       }
 
       return (

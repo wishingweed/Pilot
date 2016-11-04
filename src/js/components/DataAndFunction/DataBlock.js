@@ -60,16 +60,14 @@ export default class DataBlock extends React.Component {
 
 var topfive1;
 const {pilot} = this.props;
-var steps = pilot.steps;
-console.log("steps",steps);
 if(pilot.status == "INIT")
   {topfive1=topfive}
 else if(pilot.status == "MODIFY")
-  topfive1 = steps;
+  topfive1 = dataselection;
 
   if(topfive1.length>0)
   {
-//    DataItems = topfive1.map((item)=><DataItem title = {item} key = {item} uniquekey={item} />);
+    DataItems = topfive1.map((item,i)=><DataItem title = {item.NAME} key = {i} uniquekey={item.ID} />);
   }
   else
   {
