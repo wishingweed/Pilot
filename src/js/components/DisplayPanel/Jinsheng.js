@@ -16,7 +16,8 @@ import {RemoveCard,AddCardToDisplay} from "../../Actions/pilotAction"
 export default class Jingshen extends React.Component {
  
     componentDidMount() {
-       setCardDragable(ReactDOM.findDOMNode(this));
+     setCardDragable(ReactDOM.findDOMNode(this));
+          handleFocus(ReactDOM.findDOMNode(this));   
     }
     componentWillUnmount() {
     }
@@ -51,6 +52,8 @@ export default class Jingshen extends React.Component {
             colorstep = "red";
           else if(step.status == "inprocess")
             colorstep = "blue"
+
+          console.log(step.sequence);
         return <Timeline.Item color = {colorstep}>{<a onClick={this.GetStep.bind(this)} rel={step.sequence}>{step.name}</a>}</Timeline.Item>
 
       })

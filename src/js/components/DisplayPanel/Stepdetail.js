@@ -24,11 +24,11 @@ export default class Courselist extends React.Component {
       this.state={
         list:null
       }
-
+        console.log(this.props.sequence);
         const {Document} =this.props.pilotinfo;
         const {steps} =Document;
         var targetdata = steps.filter((step)=>{
-        if(step.sequence=this.props.sequence)
+        if(step.sequence==this.props.sequence)
         return step;
         })
         console.log(targetdata[0]);
@@ -77,6 +77,12 @@ const columns = [
   title: '课程状态',
   dataIndex: 'status',
   key: 'status',
+  render:(text,record)=>{
+    if(text=="inprocess")
+      return "审核中"
+    else if(text == "non")
+      return "未开始"
+  }
 },
 {
   title: '课程编号',
@@ -97,12 +103,16 @@ const columns = [
   dataIndex:'description'
 },
       { 
-        title: '操作', dataIndex: '', key: 'x', render: (key,record) =>( 
-        <span>
-        <a onClick={this.RemoveRow.bind(this)} rel={record.course_id}>提交申请</a>
+        title: '操作', dataIndex: '', key: 'x', render: (key,record) =>{ 
+      
+      if(record.status=="inprocess")
+        return <span>等待审核结果</span>
+      else if(record.status=="non" || record.status=="")
+        return <a onClick={this.RemoveRow.bind(this)} rel={record.course_id}>提交申请</a>
+     
 
-        </span>
-       )}
+      }
+     }
 
   
 ];

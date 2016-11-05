@@ -50,10 +50,6 @@ export default class DisplayPanel extends React.Component {
               switch(draggableElement.getAttribute('data-type')){
               case "ITEM":
               { 
-
-                console.log(data_id)
-
-
                 if (data_id ==1 )
                 {
                     var cardinfo ={
@@ -91,7 +87,6 @@ export default class DisplayPanel extends React.Component {
                       y:y,
                       type:"courselist"
                     }
-                    console.log(cardinfo1)
                     props.dispatch(AddCardToDisplay(cardinfo1))
 
                   }
@@ -130,16 +125,10 @@ export default class DisplayPanel extends React.Component {
       
   }
 
-  componentDidUpdate() {
-
-  }
-
-
   render() {
       var displayarea;
       const {pilotinfo}=this.props;
       const { status } = pilotinfo;
-      console.log("pilotinfo",pilotinfo);
       const { activeworkflow } = pilotinfo;
       var { Workflows } = pilotinfo;
 
