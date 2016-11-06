@@ -39,6 +39,10 @@ export default class DataBlock extends React.Component {
   {
     ID:"5",
     NAME:"查看课程"
+  },
+  {
+    ID:"6",
+    NAME:"公司概况"
   }
   ];
 

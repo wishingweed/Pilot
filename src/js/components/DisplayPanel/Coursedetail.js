@@ -99,8 +99,6 @@ export default class CourseDetail extends React.Component {
   var maxid = 0;
  const {detail} = this.state;
 
-console.log(values)
-
 if(this.state.editdata == null)
       {
       detail.map((obj)=>{

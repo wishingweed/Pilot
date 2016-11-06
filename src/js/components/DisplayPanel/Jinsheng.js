@@ -52,13 +52,11 @@ export default class Jingshen extends React.Component {
             colorstep = "red";
           else if(step.status == "inprocess")
             colorstep = "blue"
-
-          console.log(step.sequence);
         return <Timeline.Item color = {colorstep}>{<a onClick={this.GetStep.bind(this)} rel={step.sequence}>{step.name}</a>}</Timeline.Item>
 
       })
         return (
-				<div class="detail-panel">
+				<div class="workFlowDetailPanel">
 
         <Card title="晋升现状"  extra={<Icon type="cross" onClick={this.RemoveCard.bind(this)}/>}>
 

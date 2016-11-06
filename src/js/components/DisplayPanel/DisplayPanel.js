@@ -19,6 +19,9 @@ import Coursedetail from "./Coursedetail";
 import PersonalInfo from "./PersonalInfo";
 import DisplayPromotion from "./Jinsheng";
 import Stepdetail from "./Stepdetail";
+import CompanyOverview from "./CompanyOverview";
+
+
 @connect((store)=>{    
     return {
         pilotinfo:store.pilotinfo
@@ -41,7 +44,7 @@ export default class DisplayPanel extends React.Component {
       this.interactable = setAreaDropable({
 
           element: ReactDOM.findDOMNode(this),
-          accept: '.data-item, .data-block,.func-item',
+          accept: '.data-item, .data-block',
           ondrop: function(event) {
               let draggableElement = event.relatedTarget;
               var x = event.dragEvent.clientX + window.scrollX;
@@ -88,6 +91,18 @@ export default class DisplayPanel extends React.Component {
                       type:"courselist"
                     }
                     props.dispatch(AddCardToDisplay(cardinfo1))
+
+                  }
+                  else if(data_id==6)
+                  {
+                    var cardinfo = {
+                      x:x,
+                      y:y,
+                      type:"companyoverview"
+
+                    }
+               props.dispatch(AddCardToDisplay(cardinfo))
+
 
                   }
                   break;
@@ -173,6 +188,10 @@ export default class DisplayPanel extends React.Component {
           {
             return <Stepdetail key={one.cardid} cardid={one.cardid} sequence={one.sequence}/>
             break;
+          }
+          case "companyoverview":{
+              return <CompanyOverview key={one.cardid} cardid={one.cardid} />
+              break;
           }
 
           }
