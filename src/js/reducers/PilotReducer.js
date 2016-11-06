@@ -1,6 +1,5 @@
 export default function Pilot (
   state = {
-
    Pilot:{
     userid:"1",
     name:"曹斌",
@@ -54,17 +53,17 @@ export default function Pilot (
     steps:[
     {
       sequence:1,
-      course_id:[{course_id:"course1",sequence:1},{course_id:"course2",sequence:2}],
+      courses:[{courseid:"course1",sequence:1},{courseid:"course2",sequence:2}],
       name:"固态模拟机学习"
     },
     {
       sequence:2,
-      course_id:[{course_id:"table1"}],
-          name:"注册学习"
+      courses:[{courseid:"course1",sequence:1}],
+      name:"注册学习"
     },
     {
       sequence:3,
-      course_id:"course3",
+      courses:[{courseid:"course2",sequence:1}],
       name:"FTD第三课"
     }
     ]
@@ -111,20 +110,87 @@ export default function Pilot (
     case "Remove_Card":
     {
       var payload = action.payload;
-       var displayarray=state.display;
-    var newdata =   displayarray.filter((displayone)=>{
-        console.log(displayone);
+      var displayarray=state.display;
+      var newdata =   displayarray.filter((displayone)=>{
 
         return displayone.cardid != payload.cardid
       })
 
       return {...state,display:newdata}
     }
-          
+
+    case "ADD_COURSE_TO_STEP":
+    {
+      var courseTitle = action.payload;
+      var workflowid = action.payload1;
+      var stepSequence = action.payload2;
+      var courseid = action.payload3;
+      var newworkflows = state.Workflows;
+      newworkflows.filter((workflow,i)=>{
+        if(workflow.workflow_id == workflowid)
+        {
+          var steps = workflow.steps;
+          steps.filter((step,j)=>{
+            if(step.sequence == stepSequence)
+            {
+              var courses = step.courses;
+              courses.splice(courses.length-1,0,{courseid:courseid,sequence:j+1})
+            }
+          });
+        }
+      })
+      return{...state,Workflows:newworkflows};
+    }
+
+    case "CHANGE_STEP_SEQUENCE":
+    {
+      var steps = action.payload;
+      steps.map((step,i)=> {
+        step.sequence = i+1;
+      });
+      var workflowid = action.payload1;
+      var newworkflows = state.Workflows;
+      newworkflows.filter((workflow,i)=>{
+        if(workflow.workflow_id == workflowid)
+          workflow.steps = steps;
+      })
+      return{...state,Workflows:newworkflows};
+    }
+
+    case "DELETE_COURSE_FROM_STEP":
+    {
+      var workflowid = action.payload;
+      var stepSequence = action.payload1;
+      var courseid = action.payload2;
+      var newworkflows = state.Workflows;
+      newworkflows.filter((workflow,i)=>{
+        if(workflow.workflow_id == workflowid)
+        {
+          var steps = workflow.steps;
+          steps.filter((step,j)=>{
+            if(step.sequence == stepSequence)
+            {
+              var courses = step.courses;
+              courses.map((course,k)=>{
+                if(course.courseid == courseid)
+                {
+                  courses.splice(k,1);
+                }
+              })
+            }
+          });
+        }
+      })
+      return{...state,Workflows:newworkflows};
+    }
+
+    case "SAVE_STEPS_SEQUENCE":
+    {
+
+    }
 
     default:{
-
-      return state
+      return {...state,status:"INIT"}
     }
   }
 }
