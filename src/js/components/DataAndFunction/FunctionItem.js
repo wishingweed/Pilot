@@ -19,7 +19,7 @@ export default class FunctionItem extends React.Component {
     render() {
 
           return (
-            <Button className="func-item ant-btn ant-btn-ghost ant-btn-lg function-button draggable" data-type="ANALYSIS" type="ghost" data-id={this.props.id}>
+            <Button className="func-item1 ant-btn ant-btn-ghost ant-btn-lg function-button draggable" data-type="ANALYSIS" type="ghost" data-id={this.props.id}>
               {this.props.text}
             </Button>
           )    

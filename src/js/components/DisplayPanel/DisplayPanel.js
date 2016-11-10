@@ -16,6 +16,10 @@ import ChangePanel from "./changePanel"
 
 import Courselist from "./Courselist";
 import Coursedetail from "./Coursedetail";
+import PersonalInfo from "./PersonalInfo";
+import DisplayPromotion from "./Jinsheng";
+import Stepdetail from "./Stepdetail";
+import CompanyOverview from "./CompanyOverview";
 
 
 @connect((store)=>{    
@@ -40,7 +44,7 @@ export default class DisplayPanel extends React.Component {
       this.interactable = setAreaDropable({
 
           element: ReactDOM.findDOMNode(this),
-          accept: '.data-item, .data-block,.func-item',
+          accept: '.data-item, .data-block',
           ondrop: function(event) {
               let draggableElement = event.relatedTarget;
               var x = event.dragEvent.clientX + window.scrollX;
@@ -49,9 +53,27 @@ export default class DisplayPanel extends React.Component {
               switch(draggableElement.getAttribute('data-type')){
               case "ITEM":
               { 
+                if (data_id ==1 )
+                {
+                    var cardinfo ={
+                      x:x,
+                      y:y,
+                      type:"personalinfo"
+                    }
+                    props.dispatch(AddCardToDisplay(cardinfo))
+                }
+                else if(data_id ==2)
+                {
 
-                console.log(data_id)
-                  if(data_id ==4)
+                    var cardinfo ={
+                      x:x,
+                      y:y,
+                      type:"displaypromotion"
+                    }
+                    props.dispatch(AddCardToDisplay(cardinfo))
+
+                }
+                 else if(data_id ==4)
                   {
 
                     var cardinfo = {
@@ -68,8 +90,19 @@ export default class DisplayPanel extends React.Component {
                       y:y,
                       type:"courselist"
                     }
-                    console.log(cardinfo1)
                     props.dispatch(AddCardToDisplay(cardinfo1))
+
+                  }
+                  else if(data_id==6)
+                  {
+                    var cardinfo = {
+                      x:x,
+                      y:y,
+                      type:"companyoverview"
+
+                    }
+               props.dispatch(AddCardToDisplay(cardinfo))
+
 
                   }
                   break;
@@ -107,16 +140,10 @@ export default class DisplayPanel extends React.Component {
       
   }
 
-  componentDidUpdate() {
-
-  }
-
-
   render() {
       var displayarea;
       const {pilotinfo}=this.props;
       const { status } = pilotinfo;
-      console.log("pilotinfo",pilotinfo);
       const { activeworkflow } = pilotinfo;
       var { Workflows } = pilotinfo;
       var { Courses } = pilotinfo;
@@ -127,24 +154,51 @@ export default class DisplayPanel extends React.Component {
         if(pilotinfo.display.length!=0)
         {
           displayarea =  pilotinfo.display.map((one)=>{
-          if(one.type=="workflowlist")
+          switch(one.type){
+          case "workflowlist":
             {
               return <DisplayWorkFlow key={one.cardid}  cardid={one.cardid}/> ;
+                  break;
             }
-              if(one.type=="workflowdetail")
+          case "workflowdetail":
             { 
               return <WorkFlowDetailPanel key={one.cardid} cardid={one.cardid} workflowid = {one.workflowid}/>     
-            }
-              if(one.type=="courselist")
+                    break;
+              }
+          case "courselist":
           {
             return <Courselist key={one.cardid} cardid={one.cardid} />
-
+              break;
           }
-          if(one.type == "coursedetail")
+          case "coursedetail":
           {
             return <Coursedetail key={one.cardid} cardid={one.cardid} courseid={one.course_id} />
+            break;
+          }
+          case "personalinfo":
+          {
+              return <PersonalInfo  key={one.cardid} cardid={one.cardid} />
+            break;
+          }
+          case "displaypromotion":
+          {
+              return <DisplayPromotion key={one.cardid} cardid={one.cardid} />
+              break;
+          }
+          case "stepdetail":
+          {
+            return <Stepdetail key={one.cardid} cardid={one.cardid} sequence={one.sequence}/>
+            break;
+          }
+          case "companyoverview":{
+              return <CompanyOverview key={one.cardid} cardid={one.cardid} />
+              break;
+          }
+
           }
           });
+
+
         }
       }
       if(status == "MODIFY")
@@ -157,8 +211,9 @@ export default class DisplayPanel extends React.Component {
         
         });
         var steps = targetdata[0].steps;
-        if(steps.length!=0)
-          displayarea =  <ChangePanel steps = {steps} workflowid = {activeworkflow} courses = {Courses}/>;
+        displayarea =  
+        <ChangePanel steps = {steps} workflowid = {activeworkflow} courses = {Courses}/>
+
       }
 
       return (

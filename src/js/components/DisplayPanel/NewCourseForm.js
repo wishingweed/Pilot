@@ -39,7 +39,7 @@ const CollectionCreateForm = Form.create()(
             <FormItem label="课程类型">
             {getFieldDecorator('category', {
               rules: [{ required: true, message: '请输入课程标题' }],
-              initialValue: initdata?initdata.title:""
+              initialValue: initdata?initdata.category:""
 
             })(
                 <Select style={{width:200}}>

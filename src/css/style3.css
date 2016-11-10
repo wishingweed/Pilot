@@ -506,6 +506,12 @@ margin-bottom: 10px;
   margin-right: 10px;
 
 }
+.margin100{
+  display: inline-block;
+  margin-left: 100px;
+  margin-right: 10px;
+
+}
 .margin10:hover {
   box-shadow: 1px 2px 10px rgba(22, 22, 22, 0.5);
 
@@ -645,4 +651,8 @@ ul {
 li.placeholder {
   padding: 5px;
   background:#eee
+}
+.inputwidth300
+{
+  width:300px;
 }

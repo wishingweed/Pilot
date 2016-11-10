@@ -2,6 +2,7 @@ export default function Pilot (
   state = {
    Pilot:{
     userid:"1",
+    username:"caobin",
     name:"曹斌",
     password:"test",
     role:"ADM",
@@ -9,23 +10,30 @@ export default function Pilot (
       current_level:"F0",
       target_level:"F1"
     },
-    filghtinfo:{
-      filghtTime:900,
-      filghtRoute:100
+    flightinfo:{
+      flightTime:900,
+      flightRoute:100
     },
     department:"国航第九飞行编队",
-    company:"上海国航",
+    company_id:"SH1001",
+    company:"国航上海分公司",
     create_time:"2016-07-07"
    },
    Document:{
     userid:"1",
     start_date:"2016-10-10",
-    level:{
-      previous_level:"F0",
-      target_level:"F1"
-    },
+    previous_level:"F0",
+    target_level:"F1",
+    status:"inprocess",
     workflow_id:"workflow1",
-    courses:[{
+    steps:[{
+    name:"固态模拟机学习",
+    status:"inprocess",
+    sequence:1,
+    courses:[
+    {
+    status:"inprocess", 
+    sequence:1,
     course_id:"course1",
     title:"固态模拟机乱飞",
     description:"必须飞的",
@@ -33,12 +41,61 @@ export default function Pilot (
     details:[{
       id:1,
       title:"测试飞行",
-      result:true},{
+      result:true},
+      {
         id:2,
-        title:"使用操作杆",result:true}
+        title:"使用操作杆",
+        result:true}
         ],
-    overallcomment:"passed",
-   },],
+    overallcomment:"passed"
+    },
+    {
+    status:"non",
+    sequence:2,
+    course_id:"course2",
+    title:"固态模拟机乱11飞22",
+    description:"必须飞的324432",
+    category:"课程",
+    details:[
+    {id:1,
+      title:"学会模拟"},
+      {id:2,
+        title:"误操作"}
+    ],
+    overallcomment:"shitted"
+   }]//end of course
+    
+   },//end of step 1 
+   {
+    name:"注册学习",
+    status:null,
+    sequence:2,
+      courses:[
+      {
+        course_id:"table1",
+        name:"表格1",
+        status:null
+      }
+      ],
+   }, //end of step2 
+   {
+      name:"FTD第三课",
+      status:null,
+      sequence:3,
+      courses:[
+      {
+         course_id:"course3",
+         name:"第四课",
+         status:null
+      }
+
+      ],
+
+   }
+
+
+
+   ], //end of steps
    },
    role:"ADM",
    status:"INIT",
@@ -53,17 +110,19 @@ export default function Pilot (
     steps:[
     {
       sequence:1,
-      courses:[{courseid:"course1",sequence:1},{courseid:"course2",sequence:2}],
+
+      courses:[{course_id:"course1",sequence:1},{course_id:"course2",sequence:2}],
       name:"固态模拟机学习"
     },
     {
       sequence:2,
-      courses:[{courseid:"course1",sequence:1}],
-      name:"注册学习"
+      courses:[{course_id:"course1",sequence:1}],
+      name:"FFS"
     },
     {
       sequence:3,
-      courses:[{courseid:"course2",sequence:1}],
+      courses:[{course_id:"course2",sequence:1}],
+
       name:"FTD第三课"
     }
     ]
@@ -81,12 +140,70 @@ export default function Pilot (
    },
    {
     course_id:"course2",
-    title:"固态模拟机乱11飞22",
+    title:"熟练检查工作单",
     description:"必须飞的324432",
     category:"课程",
-    details:[]
+    details:[
+    {id:1,
+      title:"学会模拟"},
+      {id:2,
+        title:"误操作"}
+
+    ]
+   },
+   {
+    course_id:"course3",
+    title:"航线运输驾驶员执照",
+    description:"加油加油！",
+    category:"课程",
+    details:[
+    {id:1,
+      title:"航线"},
+      {id:2,
+        title:"牛逼"}
+
+    ]
+   },
+   {
+    course_id:"course4",
+    title:"机长转机型训练",
+    description:"来来来，训练！",
+    category:"课程",
+    details:[
+    {id:1,
+      title:"开门"},
+      {id:2,
+        title:"上飞机"}
+
+    ]
+   },
+   {
+    course_id:"course5",
+    title:"熟练检查工作单",
+    description:"必须飞的324432",
+    category:"课程",
+    details:[
+    {id:1,
+      title:"学会模拟"},
+      {id:2,
+        title:"误操作"}
+
+    ]
    }
-   ]
+   ],
+    Companys:[{
+    company_id:"SH1001",
+    company_name:"国航上海分公司",
+    departments:[{name:"飞行部"},{name:"信管部"}],
+    address:"xxxxx",
+    },
+    {
+     company_id:"BJ1001",
+     company_name:"国航北京分公司",
+     departments:[{name:"飞行部"},{name:"信管部"},{name:"外交部"}],
+     address:"XXXXXXXXX"
+    }
+    ]
   }, action
 ) {
   switch (action.type) {
@@ -134,7 +251,12 @@ export default function Pilot (
             if(step.sequence == stepSequence)
             {
               var courses = step.courses;
-              courses.splice(courses.length-1,0,{courseid:courseid,sequence:j+1})
+              var start;
+              if(courses.length == 0)
+                start = 0;
+              else
+                start = courses.length-1;
+              courses.splice(start,0,{course_id:courseid,sequence:j+1})
             }
           });
         }
@@ -172,7 +294,7 @@ export default function Pilot (
             {
               var courses = step.courses;
               courses.map((course,k)=>{
-                if(course.courseid == courseid)
+                if(course.course_id == courseid)
                 {
                   courses.splice(k,1);
                 }
@@ -186,9 +308,51 @@ export default function Pilot (
 
     case "SAVE_STEPS_SEQUENCE":
     {
-
+        return {...state,status:"INIT"}
     }
 
+    case "ADD_NEW_WORK_FLOW":
+    {
+      var newworkflow = action.payload;
+      var workflows = state.Workflows;
+      workflows.push(newworkflow);
+      // return{...state,Workflows:newworkflows};
+
+    }
+    case "DELETE_STEP_FROM_WORKFLOW":
+    {
+      var workflowid = action.payload;
+      var stepSequence = action.payload1;
+      var newworkflows = state.Workflows;
+      newworkflows.filter((workflow,i)=>{
+        if(workflow.workflow_id == workflowid)
+        {
+          var steps = workflow.steps;
+          steps.filter((step,j)=>{
+            if(step.sequence == stepSequence)
+            {
+              steps.splice(j,1);
+            }
+          });
+        }
+      });
+      return{...state,Workflows:newworkflows};
+    }
+    case "ADD_NEW_STEP":
+      {
+        var stepName = action.payload;
+        var workflowid = action.payload1;
+        var newworkflows = state.Workflows;
+        newworkflows.map((workflow,i)=>{
+        if(workflow.workflow_id == workflowid)
+        {
+          var length = workflow.steps.length+1;
+          workflow.steps.push({sequence:length,courses:[],name:stepName});
+        }
+        });
+        return{...state,Workflows:newworkflows}; 
+       
+      }
     default:{
       return {...state,status:"INIT"}
     }
